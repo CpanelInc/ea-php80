@@ -192,6 +192,7 @@ Patch42: 0001-EA4-OBS-ready.patch
 Patch43: 0002-Prevent-PEAR-package-from-bringing-in-devel.patch
 
 # cPanel patches
+Patch100: 0003-Modify-standard-mail-extenstion-to-add-X-PHP-Script-.patch
 Patch101: 0004-Removed-ZTS-support.patch
 Patch102: 0005-Ensure-that-php.d-is-not-scanned-when-PHPRC-is-set.patch
 Patch104: 0006-FPM-Ensure-docroot-is-in-the-user-s-homedir.patch
@@ -992,6 +993,7 @@ inside them.
 
 %patch42 -p1 -b .systemdpackage
 %patch43 -p1 -b .phpize
+%patch100 -p1 -b .cpanelmailheader
 %patch101 -p1 -b .disablezts
 %patch102 -p1 -b .cpanelea4ini
 %patch104 -p1 -b .fpmuserini
