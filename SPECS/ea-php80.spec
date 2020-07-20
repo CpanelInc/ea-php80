@@ -196,6 +196,7 @@ Patch101: 0004-Removed-ZTS-support.patch
 Patch102: 0005-Ensure-that-php.d-is-not-scanned-when-PHPRC-is-set.patch
 Patch104: 0006-FPM-Ensure-docroot-is-in-the-user-s-homedir.patch
 Patch105: 0007-Chroot-FPM-users-with-noshell-and-jailshell.patch
+Patch106: 0008-Patch-epoll.c-per-bug-report-in-upstream.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Patch107: 0009-Add-support-for-use-of-the-system-timezone-database-.patch
@@ -995,6 +996,7 @@ inside them.
 %patch102 -p1 -b .cpanelea4ini
 %patch104 -p1 -b .fpmuserini
 %patch105 -p1 -b .fpmjailshell
+%patch106 -p1 -b .fpmepoll
 %patch107 -p1 -b .systzdata
 
 %if 0%{rhel} < 7
