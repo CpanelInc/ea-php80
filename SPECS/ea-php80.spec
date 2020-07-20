@@ -203,6 +203,7 @@ Patch107: 0009-Add-support-for-use-of-the-system-timezone-database-.patch
 Patch108: 0010-Add-AUTOCONF-AUTOHEADER-variables-for-C6.patch
 
 Patch402: 0011-0022-PLESK-missed-kill.patch
+Patch403: 0012-Revert-new-.user.ini-search-behavior.patch
 
 BuildRequires: re2c
 BuildRequires: ea-libxml2-devel
@@ -1004,6 +1005,7 @@ inside them.
 %endif
 
 %patch402 -p1 -b .missedkill
+%patch403 -p1 -b .userini
 
 # 7.4 does not need this for tidy even thought the instructions say to do it, weird ...
 # sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
