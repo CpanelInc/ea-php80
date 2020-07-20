@@ -14,7 +14,6 @@
 %scl_package php
 
 # API/ABI check
-# PHP8_NOTE: TODO I have no idea how this is set
 %global apiver      20190128
 %global zendver     20190128
 %global pdover      20170320
@@ -47,7 +46,7 @@
 %global mysql_sock %(mysql_config --socket  2>/dev/null || echo /var/lib/mysql/mysql.sock)
 
 # Build for LiteSpeed Web Server (LSAPI)
-# PHP8_NOTE: TODO: litespeed is not compileable against php8
+# litespeed is not compileable against php8
 %global with_lsws     0
 
 # Regression tests take a long time, you can skip 'em with this
@@ -193,24 +192,16 @@ Patch42: 0001-EA4-OBS-ready.patch
 Patch43: 0002-Prevent-PEAR-package-from-bringing-in-devel.patch
 
 # cPanel patches
-# PHP8_NOTE: patch does not apply
-#Patch100: 0003-Modify-standard-mail-extenstion-to-add-X-PHP-Script-.patch
 Patch101: 0004-Removed-ZTS-support.patch
 Patch102: 0005-Ensure-that-php.d-is-not-scanned-when-PHPRC-is-set.patch
 Patch104: 0006-FPM-Ensure-docroot-is-in-the-user-s-homedir.patch
 Patch105: 0007-Chroot-FPM-users-with-noshell-and-jailshell.patch
-
-# Patch 0008 does not apply
-# PHP8_NOTE: patch does not apply
-#Patch106: 0008-Patch-epoll.c-per-bug-report-in-upstream.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Patch107: 0009-Add-support-for-use-of-the-system-timezone-database-.patch
 Patch108: 0010-Add-AUTOCONF-AUTOHEADER-variables-for-C6.patch
 
 Patch402: 0011-0022-PLESK-missed-kill.patch
-# PHP8_NOTE: patch does not apply
-#Patch403: 0012-Revert-new-.user.ini-search-behavior.patch
 
 BuildRequires: re2c
 BuildRequires: ea-libxml2-devel
@@ -1000,14 +991,10 @@ inside them.
 
 %patch42 -p1 -b .systemdpackage
 %patch43 -p1 -b .phpize
-# PHP8_NOTE: patch does not apply
-#%patch100 -p1 -b .cpanelmailheader
 %patch101 -p1 -b .disablezts
 %patch102 -p1 -b .cpanelea4ini
 %patch104 -p1 -b .fpmuserini
 %patch105 -p1 -b .fpmjailshell
-# PHP8_NOTE: patch does not apply
-#%patch106 -p1 -b .fpmepoll
 %patch107 -p1 -b .systzdata
 
 %if 0%{rhel} < 7
@@ -1016,12 +1003,8 @@ inside them.
 
 %patch402 -p1 -b .missedkill
 
-# PHP8_NOTE: patch does not apply
-#%patch403 -p1 -b .userini
-
 # 7.4 does not need this for tidy even thought the instructions say to do it, weird ...
 # sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
-
 
 # Fixes for tests
 #%patch300 -p1 -b .datetests
@@ -1589,16 +1572,9 @@ install -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/php-fpm
 #ln -s %{_bindir}/phar.phar $RPM_BUILD_ROOT%{_root_bindir}/%{?scl_prefix}phar
 %endif
 
-# JLB: Removed json, xmlrpc
-#    pdo pdo_pgsql pdo_odbc json \
-# for mod in pgsql odbc ldap snmp xmlrpc imap \
-#      pdo_*|mysqli|xmlreader|xmlrpc)
-
-echo "BEGIN: FIND"
-find . -name '*.so' -print
-echo "END: FIND"
-
 # Generate files lists and stub .ini files for each subpackage
+# PHP8_NOTE: had to remove json and xmlrpc to get it to build
+
 for mod in pgsql odbc ldap snmp imap \
     mysqlnd mysqli pdo_mysql \
     mbstring gd dom xsl soap bcmath dba xmlreader xmlwriter \
@@ -1682,7 +1658,6 @@ cat files.pdo_sqlite >> files.pdo
 cat files.sqlite3 >> files.pdo
 %endif
 # Package json and phar in -common.
-# PHP8_NOTE: removed files.json
 cat files.phar \
     files.ctype \
     files.tokenizer > files.common
@@ -1703,13 +1678,6 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/php/modules/*.a \
 
 # Remove irrelevant docs
 rm -f README.{Zeus,QNX,CVS-RULES}
-
-#echo phpdbg begin
-#find . -name phpdbg -print
-#ls -1 sapi/phpdbg
-#ls -1 build-apache/sapi/phpdbg
-#ls -1 build-apache/sapi/phpdbg/phpdbg
-#echo phpdbg end
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
@@ -1915,8 +1883,6 @@ fi
 %files ldap -f files.ldap
 %files snmp -f files.snmp
 %files xml -f files.xml
-# PHP8_NOTE: removed
-#%files xmlrpc -f files.xmlrpc
 %files mbstring -f files.mbstring
 %defattr(-,root,root,-)
 %doc libmbfl_LICENSE
