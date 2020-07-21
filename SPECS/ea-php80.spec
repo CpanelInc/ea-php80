@@ -305,7 +305,8 @@ Provides: %{?scl_prefix}php-readline = %{version}-%{release}, %{?scl_prefix}php-
 # For the ea-php-cli wrapper rpm
 Requires: ea-php-cli
 Requires: ea-php-cli-lsphp
-Requires: %{?scl_prefix}php-litespeed = %{version}-%{release}
+# PHP8_NOTE: Remove php-litespeed requirement for the time being.
+#Requires: %{?scl_prefix}php-litespeed = %{version}-%{release}
 
 %description cli
 The php-cli package contains the command-line interface
