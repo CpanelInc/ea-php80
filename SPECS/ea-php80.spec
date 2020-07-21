@@ -1580,7 +1580,6 @@ install -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/php-fpm
 %endif
 
 # Generate files lists and stub .ini files for each subpackage
-# PHP8_NOTE: had to remove json and xmlrpc to get it to build
 
 for mod in pgsql odbc ldap snmp imap \
     mysqlnd mysqli pdo_mysql \
