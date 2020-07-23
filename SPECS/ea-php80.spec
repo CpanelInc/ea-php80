@@ -1232,7 +1232,7 @@ export LIBZIP_LIBS="-L/opt/cpanel/ea-libzip/lib64 -lzip"
 %endif
 
 %if 0%{?rhel} >= 8
-export LDFLAGS="$XLDFLAGS -Wl,-rpath-link,/lib64 -Wl,-rpath,/lib64"
+export LDFLAGS="$XLDFLAGS -Wl,-rpath,/opt/cpanel/ea-libzip/lib64 -Wl,-rpath-link,/lib64 -Wl,-rpath,/lib64"
 %endif
 
 ln -sf ../configure
