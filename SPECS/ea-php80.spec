@@ -169,7 +169,7 @@ Group:    Development/Languages
 URL:      http://www.php.net/
 
 Source0: http://www.php.net/distributions/php-%{version}.tar.gz
-Source1: https://www.litespeedtech.com/packages/lsapi/php-litespeed-7.6.tgz
+Source1: https://www.litespeedtech.com/packages/lsapi/php-litespeed-7.7.tgz
 Source2: php.ini
 Source3: macros.php
 Source4: php-fpm.conf
@@ -302,8 +302,10 @@ Provides: %{?scl_prefix}php-readline = %{version}-%{release}, %{?scl_prefix}php-
 # For the ea-php-cli wrapper rpm
 Requires: ea-php-cli
 Requires: ea-php-cli-lsphp
-# PHP8_NOTE: Remove php-litespeed requirement for the time being.
-#Requires: %{?scl_prefix}php-litespeed = %{version}-%{release}
+
+%if %{with_lsws}
+Requires: %{?scl_prefix}php-litespeed = %{version}-%{release}
+%endif
 
 %description cli
 The php-cli package contains the command-line interface
