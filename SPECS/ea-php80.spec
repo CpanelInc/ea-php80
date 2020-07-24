@@ -182,9 +182,6 @@ Source11: php-fpm.init
 Source50: 10-opcache.ini
 Source51: opcache-default.blacklist
 
-# PHP-Parser
-Source100: v4.3.0.tar.gz
-
 Patch42: 0001-EA4-OBS-ready.patch
 
 # Prevent pear package from dragging in devel, which drags in a lot of
@@ -1277,11 +1274,6 @@ fi
 
 make %{?_smp_mflags}
 }
-
-# add PHP-Parser, otherwise it tries to install it from github
-cd build
-tar xf %{SOURCE100}
-cd ..
 
 # Build /usr/bin/php-cgi with the CGI SAPI, and most the shared extensions
 pushd build-cgi
