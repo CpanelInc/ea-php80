@@ -157,7 +157,7 @@ Summary:  PHP DSO
 %endif
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
-Version:  8.0.0alpha2
+Version:  8.0.0alpha3
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
 %define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
@@ -990,8 +990,7 @@ inside them.
 %prep
 : Building %{name}-%{version}-%{release} with systemd=%{with_systemd} interbase=%{with_interbase} sqlite3=%{with_sqlite3} tidy=%{with_tidy} zip=%{with_zip}
 
-#php-src-php-8.0.0alpha2
-%setup -q -n php-src-php-%{version}
+%setup -q -n php-%{version}
 
 %patch42 -p1 -b .systemdpackage
 %patch43 -p1 -b .phpize
@@ -1924,6 +1923,6 @@ fi
 %endif
 
 %changelog
-* Tue Jul 14 2020 Julian Brown <julian.brown@cpanel.net> - 8.0.0alpha2.1
+* Tue Jul 14 2020 Julian Brown <julian.brown@cpanel.net> - 8.0.0alpha3.1
 - ZC-6260: Initial alpha build of php8
 
