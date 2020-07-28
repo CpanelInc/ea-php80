@@ -1483,15 +1483,16 @@ install -m 755 -d $RPM_BUILD_ROOT%{_datadir}/php
 
 %if %{with_httpd}
 # install the DSO
+
 install -m 755 -d $RPM_BUILD_ROOT%{_httpd_moddir}
-install -m 755 build-apache/libs/libphp.so $RPM_BUILD_ROOT%{_httpd_moddir}
+install -m 755 build-apache/libs/libphp.so $RPM_BUILD_ROOT%{_httpd_moddir}/libphp8.so
 
 # Apache config fragment
 install -m 755 -d $RPM_BUILD_ROOT%{_httpd_contentdir}/icons
 install -m 644 ext/gd/tests/php.gif $RPM_BUILD_ROOT%{_httpd_contentdir}/icons/%{name}.gif
 %if %{?scl:1}0
 install -m 755 -d $RPM_BUILD_ROOT%{_root_httpd_moddir}
-ln -s %{_httpd_moddir}/libphp.so      $RPM_BUILD_ROOT%{_root_httpd_moddir}/libphp.so
+ln -s %{_httpd_moddir}/libphp8.so $RPM_BUILD_ROOT%{_root_httpd_moddir}/libphp8.so
 %endif
 
 %endif
@@ -1759,11 +1760,11 @@ fi
 %defattr(-,root,root)
 
 %if %{with_httpd}
-%{_httpd_moddir}/libphp.so
+%{_httpd_moddir}/libphp8.so
 %if 0%{?scl:1}
 #%dir %{_libdir}/apache2
 #%dir %{_libdir}/apache2/modules
-%{_root_httpd_moddir}/libphp.so
+%{_root_httpd_moddir}/libphp8.so
 %endif
 %{_httpd_contentdir}/icons/%{name}.gif
 %endif
@@ -1862,7 +1863,7 @@ fi
 %if %{with_embed}
 %files embedded
 %defattr(-,root,root,-)
-%{_libdir}/libphp.so
+%{_libdir}/libphp8.so
 %{_libdir}/libphp8-%{embed_version}.so
 %endif
 
