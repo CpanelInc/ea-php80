@@ -41,7 +41,8 @@
 %global _httpd_contentdir  /var/www
 %endif
 
-%global with_httpd           1
+# disabling DSO for a time
+%global with_httpd           0
 
 %global mysql_sock %(mysql_config --socket  2>/dev/null || echo /var/lib/mysql/mysql.sock)
 
