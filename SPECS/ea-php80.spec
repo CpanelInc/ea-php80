@@ -160,7 +160,7 @@ Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 Version:  8.0.0alpha3
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1919,6 +1919,9 @@ fi
 %endif
 
 %changelog
+* Wed Aug 26 2020 Julian Brown <julian.brown@cpanel.net> - 8.0.0alpha3.2
+- ZC-7369: Remove DSO from rpm
+
 * Tue Jul 14 2020 Julian Brown <julian.brown@cpanel.net> - 8.0.0alpha3.1
 - ZC-6260: Initial alpha build of php8
 
