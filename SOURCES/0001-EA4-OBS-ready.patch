@@ -1,33 +1,31 @@
-From 5dc523fb91d875327cd833211f7aa335ed8ee57a Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Daniel Muey <dan@cpanel.net>
-Date: Tue, 28 Jan 2020 17:45:17 -0600
-Subject: [PATCH 01/12] EA4 OBS ready
+Date: Tue, 22 Sep 2020 12:27:52 -0500
+Subject: [PATCH] EA4 OBS ready
 
-1. Remove faulty libxml2 check
-2. Remove faulty systemd check from fpm sapi config
 ---
  build/php.m4       | 2 --
  sapi/fpm/config.m4 | 2 --
  2 files changed, 4 deletions(-)
 
 diff --git a/build/php.m4 b/build/php.m4
-index fdcf8a2..5ab4916 100644
+index b0e3c424..930a0277 100644
 --- a/build/php.m4
 +++ b/build/php.m4
-@@ -2026,8 +2026,6 @@ dnl
+@@ -1998,8 +1998,6 @@ dnl
  dnl Common setup macro for libxml.
  dnl
  AC_DEFUN([PHP_SETUP_LIBXML], [
--  PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= 2.7.6])
+-  PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= 2.9.0])
 -
    PHP_EVAL_INCLINE($LIBXML_CFLAGS)
    PHP_EVAL_LIBLINE($LIBXML_LIBS, $1)
  
 diff --git a/sapi/fpm/config.m4 b/sapi/fpm/config.m4
-index ad89c1b..fc06a05 100644
+index 7c2fdec1..088e52db 100644
 --- a/sapi/fpm/config.m4
 +++ b/sapi/fpm/config.m4
-@@ -549,8 +549,6 @@ if test "$PHP_FPM" != "no"; then
+@@ -538,8 +538,6 @@ if test "$PHP_FPM" != "no"; then
      [no])
  
    if test "$PHP_FPM_SYSTEMD" != "no" ; then
@@ -36,6 +34,3 @@ index ad89c1b..fc06a05 100644
      AC_CHECK_HEADERS(systemd/sd-daemon.h, [HAVE_SD_DAEMON_H="yes"], [HAVE_SD_DAEMON_H="no"])
      if test $HAVE_SD_DAEMON_H = "no"; then
        AC_MSG_ERROR([Your system does not support systemd.])
--- 
-2.25.1
-
