@@ -14,8 +14,8 @@
 %scl_package php
 
 # API/ABI check
-%global apiver      20190128
-%global zendver     20190128
+%global apiver      20200804
+%global zendver     20200804
 %global pdover      20170320
 
 # Adds -z now to the linker flags
@@ -158,9 +158,9 @@ Summary:  PHP DSO
 %endif
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
-Version:  8.0.0alpha3
+Version:  8.0.0beta4
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 2
+%define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1919,9 +1919,12 @@ fi
 %endif
 
 %changelog
-* Wed Aug 26 2020 Julian Brown <julian.brown@cpanel.net> - 8.0.0alpha3.2
+* Tue Sep 22 2020 Daniel Muey <dan@cpanel.net> - 8.0.0beta4-1
+- ZC-7523: Update to beta 4
+
+* Wed Aug 26 2020 Julian Brown <julian.brown@cpanel.net> - 8.0.0alpha3-2
 - ZC-7369: Remove DSO from rpm
 
-* Tue Jul 14 2020 Julian Brown <julian.brown@cpanel.net> - 8.0.0alpha3.1
+* Tue Jul 14 2020 Julian Brown <julian.brown@cpanel.net> - 8.0.0alpha3-1
 - ZC-6260: Initial alpha build of php8
 
