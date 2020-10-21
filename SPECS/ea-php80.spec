@@ -51,8 +51,7 @@
 %global with_lsws     0
 
 # Regression tests take a long time, you can skip 'em with this
-# %{!?runselftest: %{expand: %%global runselftest 1}}
-%global runselftest 0
+%{!?runselftest: %{expand: %%global runselftest 1}}
 
 # Use the arch-specific mysql_config binary to avoid mismatch with the
 # arch detection heuristic used by bindir/mysql_config.
@@ -160,7 +159,7 @@ Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 Version:  8.0.0beta4
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1919,6 +1918,9 @@ fi
 %endif
 
 %changelog
+* Wed Oct 21 2020 Daniel Muey <dan@cpanel.net> - 8.0.0beta4-2
+- ZC-7497: Reinstate `runselftest`
+
 * Tue Sep 22 2020 Daniel Muey <dan@cpanel.net> - 8.0.0beta4-1
 - ZC-7523: Update to beta 4
 
