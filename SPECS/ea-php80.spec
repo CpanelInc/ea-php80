@@ -42,7 +42,7 @@
 %endif
 
 # disabling DSO for a time
-%global with_httpd           0
+%global with_httpd           1
 
 %global mysql_sock %(mysql_config --socket  2>/dev/null || echo /var/lib/mysql/mysql.sock)
 
@@ -159,7 +159,7 @@ Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 Version:  8.0.0RC3
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1918,6 +1918,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 29 2020 Daniel Muey <dan@cpanel.net> - 8.0.0RC3-2
+- ZC-7254: Get DSO to buid
+
 * Thu Oct 29 2020 Daniel Muey <dan@cpanel.net> - 8.0.0RC3-1
 - ZC-7310: Update to RC3
 
