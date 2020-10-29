@@ -14,8 +14,8 @@
 %scl_package php
 
 # API/ABI check
-%global apiver      20200804
-%global zendver     20200804
+%global apiver      20200930
+%global zendver     20200930
 %global pdover      20170320
 
 # Adds -z now to the linker flags
@@ -157,9 +157,9 @@ Summary:  PHP DSO
 %endif
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
-Version:  8.0.0beta4
+Version:  8.0.0RC3
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 2
+%define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1918,6 +1918,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 29 2020 Daniel Muey <dan@cpanel.net> - 8.0.0RC3-1
+- ZC-7310: Update to RC3
+
 * Wed Oct 21 2020 Daniel Muey <dan@cpanel.net> - 8.0.0beta4-2
 - ZC-7497: Reinstate `runselftest`
 
