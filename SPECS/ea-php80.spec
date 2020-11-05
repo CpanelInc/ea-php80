@@ -48,7 +48,7 @@
 
 # Build for LiteSpeed Web Server (LSAPI)
 # litespeed is not compileable against php8
-%global with_lsws     0
+%global with_lsws    1
 
 # Regression tests take a long time, you can skip 'em with this
 %{!?runselftest: %{expand: %%global runselftest 1}}
@@ -162,7 +162,7 @@ Group:    Development/Languages
 URL:      http://www.php.net/
 
 Source0: http://www.php.net/distributions/php-%{version}.tar.gz
-Source1: https://www.litespeedtech.com/packages/lsapi/php-litespeed-7.7.tgz
+Source1: https://www.litespeedtech.com/packages/lsapi/php-litespeed-7.8.tgz
 Source2: php.ini
 Source3: macros.php
 Source4: php-fpm.conf
@@ -1895,6 +1895,7 @@ fi
 %changelog
 * Thu Nov 05 2020 Daniel Muey <dan@cpanel.net> - 8.0.0RC3-5
 - ZC-7862: Updates now that ea-libcurl builds on C8
+- ZC-7298: Resinstate litespeed w/ update that supports PHP 8
 
 * Mon Nov 02 2020 Daniel Muey <dan@cpanel.net> - 8.0.0RC3-4
 - ZC-7893: remove unused php.modconf
