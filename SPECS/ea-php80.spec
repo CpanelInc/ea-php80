@@ -150,7 +150,8 @@ Summary:  PHP DSO
 %endif
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
-Version:  8.0.0RC3
+# update to RC4: also update other temprary hardcoded RC3
+Version:  8.0.0rc3
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
 %define release_prefix 5
 Release:  %{release_prefix}%{?dist}.cpanel
@@ -968,7 +969,8 @@ inside them.
 %prep
 : Building %{name}-%{version}-%{release} with systemd=%{with_systemd} interbase=%{with_interbase} sqlite3=%{with_sqlite3} tidy=%{with_tidy} zip=%{with_zip}
 
-%setup -q -n php-%{version}
+# change back to php-%{version} once they drop the RC labels
+%setup -q -n php-8.0.0RC3
 
 %patch42 -p1 -b .systemdpackage
 %patch43 -p1 -b .phpize
@@ -1043,7 +1045,8 @@ rm Zend/tests/bug68412.phpt
 
 # Safety check for API version change.
 pver=$(sed -n '/#define PHP_VERSION /{s/.* "//;s/".*$//;p}' main/php_version.h)
-if test "x${pver}" != "x%{version}"; then
+# change back to x${version} once they drop the RC labels
+if test "x${pver}" != "x8.0.0RC3"; then
    : Error: Upstream PHP version is now ${pver}, expecting %{version}.
    : Update the version macros and rebuild.
    exit 1
@@ -1087,10 +1090,11 @@ find . -name \*.[ch] -exec chmod 644 {} \;
 chmod 644 README.*
 
 # Create the macros.php files
+# change back to %{version} once they drop the RC labels
 sed -e "s/@PHP_APIVER@/%{apiver}%{isasuffix}/" \
     -e "s/@PHP_ZENDVER@/%{zendver}%{isasuffix}/" \
     -e "s/@PHP_PDOVER@/%{pdover}%{isasuffix}/" \
-    -e "s/@PHP_VERSION@/%{version}/" \
+    -e "s/@PHP_VERSION@/8.0.0rc3/" \
     -e "s:@LIBDIR@:%{_libdir}:" \
     -e "s:@ETCDIR@:%{_sysconfdir}:" \
     -e "s:@INCDIR@:%{_includedir}:" \
@@ -1892,19 +1896,19 @@ fi
 %endif
 
 %changelog
-* Thu Nov 05 2020 Daniel Muey <dan@cpanel.net> - 8.0.0RC3-5
+* Thu Nov 05 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc3-5
 - ZC-7862: Updates now that ea-libcurl builds on C8
 
-* Mon Nov 02 2020 Daniel Muey <dan@cpanel.net> - 8.0.0RC3-4
+* Mon Nov 02 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc3-4
 - ZC-7893: remove unused php.modconf
 
-* Thu Oct 29 2020 Tim Mullin <tim@cpanel.net> - 8.0.0RC3-3
+* Thu Oct 29 2020 Tim Mullin <tim@cpanel.net> - 8.0.0rc3-3
 - EA-9390: Fix build with latest ea-brotli (v1.0.9)
 
-* Thu Oct 29 2020 Daniel Muey <dan@cpanel.net> - 8.0.0RC3-2
+* Thu Oct 29 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc3-2
 - ZC-7254: Get DSO to buid
 
-* Thu Oct 29 2020 Daniel Muey <dan@cpanel.net> - 8.0.0RC3-1
+* Thu Oct 29 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc3-1
 - ZC-7310: Update to RC3
 
 * Wed Oct 21 2020 Daniel Muey <dan@cpanel.net> - 8.0.0beta4-2
