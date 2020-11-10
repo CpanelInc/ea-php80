@@ -34,7 +34,7 @@ For example, if a user edits a PHP INI directive we write them all to `php.ini`,
 * Making it major agnostic started here: https://github.com/php/php-src/commit/6e3600f41b95d97d11ef48f817e6389a4ee95091
 * Which caused this bug: https://bugs.php.net/bug.php?id=78681
 * Which was addressed here: https://github.com/php/php-src/commit/ad53bacf3872c22919fc2620112ae64917f1c26a
-* Follow up discusson here: …
+* Follow up discusson here: https://news-web.php.net/php.internals/112219
 
 **✻** renaming the file or symlinking the one we want to the one that exists won’t work due the symbols not matching (e.g. for `LoadModule` and `IfModule` statements).
 
