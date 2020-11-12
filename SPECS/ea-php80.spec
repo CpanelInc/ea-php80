@@ -153,7 +153,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.0rc4
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -271,12 +271,11 @@ Requires: autotools-latest-autoconf
 %if %{with_httpd}
 Package that installs Apache`s mod_php DSO module for PHP 8.0
 %else
-PHP is an HTML-embedded scripting language. PHP attempts to make it
-easy for developers to write dynamically generated web pages. PHP also
-offers built-in database integration for several commercial and
-non-commercial database management systems, so writing a
-database-enabled webpage with PHP is fairly simple. The most common
-use of PHP coding is probably as a replacement for CGI scripts.
+This version of PHP does not include Apache`s mod_php DSO module.
+
+For more information on why, please see:
+
+https://github.com/CpanelInc/ea-php80/DESIGN.dso.md
 %endif
 
 
@@ -1895,6 +1894,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 12 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc4-2
+- ZC-7969: Update description of non-DSO ea-php80-php to be more helpful
+
 * Wed Nov 11 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc4-1
 - ZC-7961: Update to RC4
 
