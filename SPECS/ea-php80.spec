@@ -80,7 +80,10 @@ BuildRequires: devtoolset-7-gcc-c++
 %global with_webp 0
 %endif
 %global with_curl     1
+%if 0%{?rhel} >= 8
+%else
 %global libcurl_prefix /opt/cpanel/libcurl
+%endif
 %if 0%{?fedora}
 %global with_interbase 1
 %else
@@ -142,7 +145,11 @@ BuildRequires: ea-libzip-devel
 
 %define ea_openssl_ver 1.1.1d-1
 
+%if 0%{?rhel} >= 8
+%define libcurl_ver 7.61.0
+%else
 %define ea_libcurl_ver 7.68.0-2
+%endif
 
 Summary:  PHP scripting language for creating dynamic web sites
 %if %{with_httpd}
@@ -153,7 +160,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.0rc4
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 2
+%define release_prefix 3
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -201,7 +208,12 @@ BuildRequires: re2c
 BuildRequires: ea-libxml2-devel
 BuildRequires: bzip2-devel, %{db_devel}
 
+%if 0%{?rhel} >= 8
+BuildRequires: libcurl >= %{libcurl_ver}, libcurl-devel >= %{libcurl_ver}
+BuildRequires: brotli brotli-devel
+%else
 BuildRequires: %{ns_name}-libcurl >= %{ea_libcurl_ver}, %{ns_name}-libcurl-devel >= %{ea_libcurl_ver}
+%endif
 
 BuildRequires: pam-devel
 Requires: ea-openssl11 >= %{ea_openssl_ver}
@@ -457,7 +469,11 @@ Group: Development/Languages
 License: PHP
 Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
+%if 0%{rhel} < 8
 Requires: %{ns_name}-libcurl >= %{ea_libcurl_ver}
+%else
+Requires: libcurl
+%endif
 BuildRequires: libssh2 libssh2-devel libidn libidn-devel ea-libnghttp2-devel
 Provides: %{?scl_prefix}php-curl = %{version}-%{release}, %{?scl_prefix}php-curl%{?_isa} = %{version}-%{release}
 
@@ -563,8 +579,13 @@ Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
 Requires: ea-openssl11 >= %{ea_openssl_ver}
 BuildRequires: krb5-devel%{?_isa}, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
 
+%if 0%{?rhel} >= 8
+Requires: %{?scl_prefix}libc-client
+BuildRequires: %{?scl_prefix}libc-client-devel
+%else
 Requires: %{?scl_prefix}libc-client%{?_isa}
 BuildRequires: %{?scl_prefix}libc-client-devel%{?_isa}
+%endif
 
 %description imap
 The %{?scl_prefix}php-imap module will add IMAP (Internet Message Access Protocol)
@@ -1187,8 +1208,10 @@ export LIBXML_CFLAGS=-I/opt/cpanel/ea-libxml2/include/libxml2
 export LIBXML_LIBS="-L/opt/cpanel/ea-libxml2/%{_lib} -lxml2"
 export XSL_CFLAGS=-I/opt/cpanel/ea-libxml2/include/libxml2
 export XSL_LIBS="-L/opt/cpanel/ea-libxml2/%{_lib} -lxml2"
+%if 0%{?rhel} < 8
 export CURL_CFLAGS=-I/opt/cpanel/libcurl/include
 export CURL_LIBS="-L/opt/cpanel/libcurl/%{_lib} -lcurl"
+%endif
 export JPEG_CFLAGS=-I/usr/include
 export JPEG_LIBS="-L/usr/%{_lib} -ljpeg"
 export KERBEROS_CFLAGS=-I/usr/include
@@ -1209,7 +1232,7 @@ export LIBZIP_LIBS="-L/opt/cpanel/ea-libzip/lib64 -lzip"
 %endif
 
 %if 0%{?rhel} >= 8
-export LDFLAGS="$XLDFLAGS -Wl,-rpath,/opt/cpanel/ea-libzip/lib64 -Wl,-rpath-link,/lib64 -Wl,-rpath,/lib64 -Wl,-rpath=/opt/cpanel/ea-brotli/lib"
+export LDFLAGS="$XLDFLAGS -Wl,-rpath,/opt/cpanel/ea-libzip/lib64 -Wl,-rpath-link,/lib64 -Wl,-rpath,/lib64"
 %else
 export LDFLAGS="-Wl,-rpath=/opt/cpanel/ea-brotli/lib"
 %endif
@@ -1302,7 +1325,11 @@ build --libdir=%{_libdir}/php \
       --enable-soap=shared \
       --with-xsl=shared,%{_root_prefix} \
       --enable-xmlreader=shared --enable-xmlwriter=shared \
+%if 0%{?rhel} >= 8
+      --with-curl=shared \
+%else
       --with-curl=shared,%{libcurl_prefix} \
+%endif
       --enable-pdo=shared \
       --with-pdo-odbc=shared,unixODBC,%{_root_prefix} \
       --with-pdo-mysql=shared,mysqlnd \
@@ -1894,6 +1921,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 16 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc4-3
+- ZC-7985: remove libcurl updates for release
+
 * Thu Nov 12 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc4-2
 - ZC-7969: Update description of non-DSO ea-php80-php to be more helpful
 
@@ -1902,9 +1932,6 @@ fi
 
 * Thu Nov 05 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc3-5
 - ZC-7862: Updates now that ea-libcurl builds on C8
-
-* Mon Nov 02 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc3-4
-- ZC-7893: remove unused php.modconf
 
 * Thu Oct 29 2020 Tim Mullin <tim@cpanel.net> - 8.0.0rc3-3
 - EA-9390: Fix build with latest ea-brotli (v1.0.9)
