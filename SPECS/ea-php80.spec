@@ -271,11 +271,11 @@ Requires: autotools-latest-autoconf
 %if %{with_httpd}
 Package that installs Apache`s mod_php DSO module for PHP 8.0
 %else
-This version of PHP does not include Apache`s mod_php DSO module.
+This version of PHP does not include Apache's mod_php DSO module.
 
-For more information on why, please see:
-
-https://github.com/CpanelInc/ea-php80/DESIGN.dso.md
+PHP dropped the major version from its '.so' and symbols. Because
+ this change is not backwards compatible, cPanel & WHM dropped
+ support for DSO in PHP 8.0.
 %endif
 
 
