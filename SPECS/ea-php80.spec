@@ -41,7 +41,7 @@
 %global _httpd_contentdir  /var/www
 %endif
 
-# disabling DSO, for details on why see https://github.com/CpanelInc/ea-php80/DESIGN.dso.md
+# disabling DSO, for details on why see https://github.com/CpanelInc/ea-php80/blob/master/DESIGN.dso.md
 %global with_httpd           0
 
 %global mysql_sock %(mysql_config --socket  2>/dev/null || echo /var/lib/mysql/mysql.sock)
