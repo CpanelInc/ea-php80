@@ -19,7 +19,7 @@ As of PHP 8, PHP decided to drop the major version from its `.so` and its symbol
 
 That will not work out of the box with our systems because they rely on on the consistent naming to do the right thing.
 
-For example, if a user edits a PHP INI directive we write them all to `php.ini`, any supported ones to `.user.ini`, any supported ones to `.htaccess`. That way when their handler changes their PHP has the best chance of behaving the same as it was. In `.htaccess` we put any directives that 5 supported in an `IfModule` for 5, The directives that 7 supported in an `IfModule`, and 8 would get that treatment also. If we changed that to a single major-version agnositic `IfModule` and a 7 only diredtive where added while sitching to/running 8 there would be an error.
+For example, if a user edits a PHP INI directive we write them all to `php.ini`, any supported ones to `.user.ini`, any supported ones to `.htaccess`. That way when their handler changes their PHP has the best chance of behaving the same as it was. In `.htaccess` we put any directives that 5 supported in an `IfModule` for 5, the directives that 7 supported in an `IfModule` for 7, and 8 would get that treatment also. If we changed that to a single major-version agnostic `IfModule` and a 7 only directive where added while switching to/running 8 there would be an error.
 
 ### References:
 
