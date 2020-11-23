@@ -47,8 +47,7 @@
 %global mysql_sock %(mysql_config --socket  2>/dev/null || echo /var/lib/mysql/mysql.sock)
 
 # Build for LiteSpeed Web Server (LSAPI)
-# litespeed is not compileable against php8
-%global with_lsws     0
+%global with_lsws     1
 
 # Regression tests take a long time, you can skip 'em with this
 %{!?runselftest: %{expand: %%global runselftest 1}}
@@ -160,7 +159,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.0rc4
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 3
+%define release_prefix 4
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -170,7 +169,7 @@ Group:    Development/Languages
 URL:      http://www.php.net/
 
 Source0: http://www.php.net/distributions/php-%{version}.tar.gz
-Source1: https://www.litespeedtech.com/packages/lsapi/php-litespeed-7.7.tgz
+Source1: https://www.litespeedtech.com/packages/lsapi/php-litespeed-7.8.tgz
 Source2: php.ini
 Source3: macros.php
 Source4: php-fpm.conf
@@ -1291,6 +1290,9 @@ build --libdir=%{_libdir}/php \
       --with-imap=shared,%{_prefix} \
       --with-imap-ssl \
       --enable-mbstring=shared \
+%if %{with_lsws}
+      --enable-litespeed \
+%endif
 %if %{with_webp}
       --with-webp \
 %endif
@@ -1388,9 +1390,6 @@ without_shared="--disable-gd \
 pushd build-apache
 build --with-apxs2=%{_httpd_apxs} \
       --libdir=%{_libdir}/php \
-%if %{with_lsws}
-      --enable-litespeed \
-%endif
       --without-mysqli \
       --disable-pdo \
       ${without_shared}
@@ -1504,7 +1503,7 @@ install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php.d
 install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/lib
 
 %if %{with_lsws}
-install -m 755 build-apache/sapi/litespeed/php $RPM_BUILD_ROOT%{_bindir}/lsphp
+install -m 755 build-cgi/sapi/litespeed/php $RPM_BUILD_ROOT%{_bindir}/lsphp
 %endif
 
 %if %{with_fpm}
@@ -1921,6 +1920,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 23 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc4-4
+- ZC-7865: Update to litespeed SAPI to 7.8
+
 * Mon Nov 16 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc4-3
 - ZC-7985: remove libcurl updates for release
 
