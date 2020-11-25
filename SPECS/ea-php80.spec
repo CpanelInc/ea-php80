@@ -215,8 +215,22 @@ BuildRequires: %{ns_name}-libcurl >= %{ea_libcurl_ver}, %{ns_name}-libcurl-devel
 %endif
 
 BuildRequires: pam-devel
+BuildRequires: scl-utils-build
+BuildRequires: libstdc++-devel
+
+%if 0%{?rhel} > 7
+#
+# We made a conscious decision to only use system openssl on C8.
+# See design doc:
+# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
+#
+BuildRequires: openssl, openssl-devel
+Requires: openssl
+%else
+BuildRequires: ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
 Requires: ea-openssl11 >= %{ea_openssl_ver}
-BuildRequires: libstdc++-devel, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}, scl-utils-build
+%endif
+
 # For Argon2 support
 BuildRequires: ea-libargon2-devel
 Requires: ea-libargon2
@@ -575,8 +589,21 @@ License: PHP
 Provides: %{?scl_prefix}php-imap%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
+
+BuildRequires: krb5-devel%{?_isa}
+
+%if 0%{?rhel} > 7
+#
+# We made a conscious decision to only use system openssl on C8.
+# See design doc:
+# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
+#
+BuildRequires: openssl, openssl-devel
+Requires: openssl
+%else
+BuildRequires: ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
 Requires: ea-openssl11 >= %{ea_openssl_ver}
-BuildRequires: krb5-devel%{?_isa}, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
+%endif
 
 %if 0%{?rhel} >= 8
 Requires: %{?scl_prefix}libc-client
@@ -598,8 +625,21 @@ Group: Development/Languages
 License: PHP
 Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
+
+BuildRequires: cyrus-sasl-devel, openldap-devel
+
+%if 0%{?rhel} > 7
+#
+# We made a conscious decision to only use system openssl on C8.
+# See design doc:
+# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
+#
+BuildRequires: openssl, openssl-devel
+Requires: openssl
+%else
+BuildRequires: ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
 Requires: ea-openssl11 >= %{ea_openssl_ver}
-BuildRequires: cyrus-sasl-devel, openldap-devel, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
+%endif
 
 %description ldap
 The %{?scl_prefix}php-ldap package adds Lightweight Directory Access Protocol (LDAP)
@@ -671,7 +711,21 @@ License: PHP
 Requires: %{?scl_prefix}php-pdo%{?_isa} = %{version}-%{release}
 Provides: %{?scl_prefix}php_database = %{version}-%{release}
 Provides: %{?scl_prefix}php-pdo_pgsql = %{version}-%{release}, %{?scl_prefix}php-pdo_pgsql%{?_isa} = %{version}-%{release}
-BuildRequires: krb5-devel, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}, postgresql-devel
+
+BuildRequires: krb5-devel, postgresql-devel
+
+%if 0%{?rhel} > 7
+#
+# We made a conscious decision to only use system openssl on C8.
+# See design doc:
+# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
+#
+BuildRequires: openssl, openssl-devel
+Requires: openssl
+%else
+BuildRequires: ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
+Requires: ea-openssl11 >= %{ea_openssl_ver}
+%endif
 
 %description pgsql
 The %{?scl_prefix}php-pgsql package add PostgreSQL database support to PHP.
@@ -1168,8 +1222,12 @@ C8FLAGS="-mshstk"
 CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign $C8FLAGS"
 export CFLAGS
 
+%if 0%{?rhel} > 7
+export CURL_SHARED_LIBADD="-Wl,-rpath=/opt/cpanel/ea-brotli/%{_lib}"
+%else
 export SNMP_SHARED_LIBADD="-Wl,-rpath=/opt/cpanel/ea-openssl11/%{_lib}"
 export CURL_SHARED_LIBADD="-Wl,-rpath=/opt/cpanel/ea-openssl11/%{_lib} -Wl,-rpath=/opt/cpanel/ea-brotli/%{_lib}"
+%endif
 
 # Install extension modules in %{_libdir}/php/modules.
 EXTENSION_DIR=%{_libdir}/php/modules; export EXTENSION_DIR
@@ -1199,7 +1257,11 @@ cp ../Zend/zend_{language,ini}_{parser,scanner}.* Zend
 # openssl: for PHAR_SIG_OPENSSL
 # zlib: used by image
 
+%if 0%{?rhel} > 7
+export PKG_CONFIG_PATH=/opt/cpanel/ea-php80/root/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-php80/root/usr/share/pkgconfig:/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-libxml2/%{_lib}/pkgconfig:/opt/cpanel/ea-libicu/lib/pkgconfig:/opt/cpanel/ea-oniguruma/%{_lib}/pkgconfig
+%else
 export PKG_CONFIG_PATH=/opt/cpanel/ea-php80/root/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-php80/root/usr/share/pkgconfig:/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-openssl11/%{_lib}/pkgconfig:/opt/cpanel/ea-libxml2/%{_lib}/pkgconfig:/opt/cpanel/ea-libicu/lib/pkgconfig:/opt/cpanel/ea-oniguruma/%{_lib}/pkgconfig
+%endif
 
 export LIBXML_CFLAGS=-I/opt/cpanel/ea-libxml2/include/libxml2
 export LIBXML_LIBS="-L/opt/cpanel/ea-libxml2/%{_lib} -lxml2"
@@ -1215,9 +1277,11 @@ export KERBEROS_CFLAGS=-I/usr/include
 export KERBEROS_LIBS=-L/usr/%{_lib}
 export SASL_CFLAGS=-I/usr/include
 export SASL_LIBS=-L/usr/%{_lib}
+
+%if 0%{?rhel} < 8
 export OPENSSL_CFLAGS=-I/opt/cpanel/ea-openssl11/include
 export OPENSSL_LIBS="-L/opt/cpanel/ea-openssl11/lib -lssl -lcrypto -lresolv"
-
+%endif
 
 %if %{with_systemd}
 export SYSTEMD_LIBS=-lsystemd
@@ -1417,38 +1481,6 @@ build --enable-embed \
       --without-mysqli --disable-pdo \
       ${without_shared}
 popd
-%endif
-
-%check
-%if %runselftest
-
-# Increase stack size (required by bug54268.phpt)
-ulimit -s 32712
-
-%if %{with_httpd}
-cd build-apache
-%else
-cd build-cgi
-%endif
-
-# Run tests, using the CLI SAPI
-export NO_INTERACTION=1 REPORT_EXIT_STATUS=1 MALLOC_CHECK_=2
-export SKIP_ONLINE_TESTS=1
-unset TZ LANG LC_ALL
-if ! make test; then
-  set +x
-  for f in $(find .. -name \*.diff -type f -print); do
-    if ! grep -q XFAIL "${f/.diff/.phpt}"
-    then
-      echo "TEST FAILURE: $f --"
-      head -n 100 "$f"
-      echo -e "\n-- $f result ends."
-    fi
-  done
-  set -x
-  #exit 1
-fi
-unset NO_INTERACTION REPORT_EXIT_STATUS MALLOC_CHECK_
 %endif
 
 %install
@@ -1920,6 +1952,9 @@ fi
 %changelog
 * Thu Nov 26 2020 Daniel Muey <dan@cpanel.net> - 8.0.0-1
 - EA-9443: Update ea-php80 from v8.0.0rc4 to v8.0.0
+
+* Wed Nov 25 2020 Julian Brown <julian.brown@cpanel.net> - 8.0.0rc4-5
+- ZC-8005: Replace ea-openssl11 with system openssl on C8
 
 * Mon Nov 23 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc4-4
 - ZC-7865: Update to litespeed SAPI to 7.8
