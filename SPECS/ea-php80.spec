@@ -219,11 +219,7 @@ BuildRequires: scl-utils-build
 BuildRequires: libstdc++-devel
 
 %if 0%{?rhel} > 7
-#
-# We made a conscious decision to only use system openssl on C8.
-# See design doc:
-# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
-#
+# In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
 BuildRequires: openssl, openssl-devel
 Requires: openssl
 %else
@@ -593,11 +589,7 @@ Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
 BuildRequires: krb5-devel%{?_isa}
 
 %if 0%{?rhel} > 7
-#
-# We made a conscious decision to only use system openssl on C8.
-# See design doc:
-# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
-#
+# In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
 BuildRequires: openssl, openssl-devel
 Requires: openssl
 %else
@@ -629,11 +621,7 @@ Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
 BuildRequires: cyrus-sasl-devel, openldap-devel
 
 %if 0%{?rhel} > 7
-#
-# We made a conscious decision to only use system openssl on C8.
-# See design doc:
-# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
-#
+# In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
 BuildRequires: openssl, openssl-devel
 Requires: openssl
 %else
@@ -715,11 +703,7 @@ Provides: %{?scl_prefix}php-pdo_pgsql = %{version}-%{release}, %{?scl_prefix}php
 BuildRequires: krb5-devel, postgresql-devel
 
 %if 0%{?rhel} > 7
-#
-# We made a conscious decision to only use system openssl on C8.
-# See design doc:
-# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
-#
+# In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
 BuildRequires: openssl, openssl-devel
 Requires: openssl
 %else
@@ -1481,6 +1465,38 @@ build --enable-embed \
       --without-mysqli --disable-pdo \
       ${without_shared}
 popd
+%endif
+
+%check
+%if %runselftest
+
+# Increase stack size (required by bug54268.phpt)
+ulimit -s 32712
+
+%if %{with_httpd}
+cd build-apache
+%else
+cd build-cgi
+%endif
+
+# Run tests, using the CLI SAPI
+export NO_INTERACTION=1 REPORT_EXIT_STATUS=1 MALLOC_CHECK_=2
+export SKIP_ONLINE_TESTS=1
+unset TZ LANG LC_ALL
+if ! make test; then
+  set +x
+  for f in $(find .. -name \*.diff -type f -print); do
+    if ! grep -q XFAIL "${f/.diff/.phpt}"
+    then
+      echo "TEST FAILURE: $f --"
+      head -n 100 "$f"
+      echo -e "\n-- $f result ends."
+    fi
+  done
+  set -x
+  #exit 1
+fi
+unset NO_INTERACTION REPORT_EXIT_STATUS MALLOC_CHECK_
 %endif
 
 %install
