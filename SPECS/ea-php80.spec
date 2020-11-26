@@ -168,7 +168,7 @@ License:  PHP and Zend and BSD
 Group:    Development/Languages
 URL:      http://www.php.net/
 
-Source0: http://www.php.net/distributions/php-%{version}.tar.gz
+Source0: http://www.php.net/distributions/php-%{version}.tar.bz2
 Source1: https://www.litespeedtech.com/packages/lsapi/php-litespeed-7.8.tgz
 Source2: php.ini
 Source3: macros.php
@@ -988,8 +988,7 @@ inside them.
 %prep
 : Building %{name}-%{version}-%{release} with systemd=%{with_systemd} interbase=%{with_interbase} sqlite3=%{with_sqlite3} tidy=%{with_tidy} zip=%{with_zip}
 
-# change back to php-%{version} once they drop the RC labels
-%setup -q -n php-8.0.0RC4
+%setup -q -n php-%{version}
 
 %patch42 -p1 -b .systemdpackage
 %patch43 -p1 -b .phpize
@@ -1064,8 +1063,7 @@ rm Zend/tests/bug68412.phpt
 
 # Safety check for API version change.
 pver=$(sed -n '/#define PHP_VERSION /{s/.* "//;s/".*$//;p}' main/php_version.h)
-# change back to x${version} once they drop the RC labels
-if test "x${pver}" != "x8.0.0RC4"; then
+if test "x${pver}" != "x%{version}"; then
    : Error: Upstream PHP version is now ${pver}, expecting %{version}.
    : Update the version macros and rebuild.
    exit 1
