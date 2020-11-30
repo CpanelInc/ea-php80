@@ -157,9 +157,9 @@ Summary:  PHP DSO
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
-Version:  8.0.0rc4
+Version:  8.0.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 4
+%define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -168,7 +168,7 @@ License:  PHP and Zend and BSD
 Group:    Development/Languages
 URL:      http://www.php.net/
 
-Source0: http://www.php.net/distributions/php-%{version}.tar.gz
+Source0: http://www.php.net/distributions/php-%{version}.tar.bz2
 Source1: https://www.litespeedtech.com/packages/lsapi/php-litespeed-7.8.tgz
 Source2: php.ini
 Source3: macros.php
@@ -988,8 +988,7 @@ inside them.
 %prep
 : Building %{name}-%{version}-%{release} with systemd=%{with_systemd} interbase=%{with_interbase} sqlite3=%{with_sqlite3} tidy=%{with_tidy} zip=%{with_zip}
 
-# change back to php-%{version} once they drop the RC labels
-%setup -q -n php-8.0.0RC4
+%setup -q -n php-%{version}
 
 %patch42 -p1 -b .systemdpackage
 %patch43 -p1 -b .phpize
@@ -1064,8 +1063,7 @@ rm Zend/tests/bug68412.phpt
 
 # Safety check for API version change.
 pver=$(sed -n '/#define PHP_VERSION /{s/.* "//;s/".*$//;p}' main/php_version.h)
-# change back to x${version} once they drop the RC labels
-if test "x${pver}" != "x8.0.0RC4"; then
+if test "x${pver}" != "x%{version}"; then
    : Error: Upstream PHP version is now ${pver}, expecting %{version}.
    : Update the version macros and rebuild.
    exit 1
@@ -1920,6 +1918,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 26 2020 Daniel Muey <dan@cpanel.net> - 8.0.0-1
+- EA-9443: Update ea-php80 from v8.0.0rc4 to v8.0.0
+
 * Mon Nov 23 2020 Daniel Muey <dan@cpanel.net> - 8.0.0rc4-4
 - ZC-7865: Update to litespeed SAPI to 7.8
 
