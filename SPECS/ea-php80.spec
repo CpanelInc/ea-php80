@@ -157,9 +157,9 @@ Summary:  PHP DSO
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
-Version:  8.0.0
+Version:  8.0.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 2
+%define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -189,7 +189,7 @@ Patch42: 0001-EA4-OBS-ready.patch
 Patch43: 0002-Prevent-PEAR-package-from-bringing-in-devel.patch
 
 # cPanel patches
-Patch100: 0003-Modify-standard-mail-extenstion-to-add-X-PHP-Script-.patch
+Patch100: 0003-Modify-standard-mail-extenstion-to-add-X-PHP-Script.patch
 Patch101: 0004-Removed-ZTS-support.patch
 Patch102: 0005-Ensure-that-php.d-is-not-scanned-when-PHPRC-is-set.patch
 Patch104: 0006-FPM-Ensure-docroot-is-in-the-user-s-homedir.patch
@@ -1966,6 +1966,9 @@ fi
 %endif
 
 %changelog
+* Thu Jan 07 2021 Tim Mullin <tim@cpanel.net> - 8.0.1-1
+- EA-9519: Update ea-php80 from v8.0.0 to v8.0.1
+
 * Mon Nov 30 2020 Daniel Muey <dan@cpanel.net> - 8.0.0-2
 - ZC-7880: Move PHP 8.0 to production
 
