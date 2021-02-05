@@ -157,7 +157,7 @@ Summary:  PHP DSO
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
-Version:  8.0.1
+Version:  8.0.2
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
 %define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
@@ -1966,6 +1966,9 @@ fi
 %endif
 
 %changelog
+* Fri Feb 05 2021 Cory McIntire <cory@cpanel.net> - 8.0.2-1
+- EA-9574: Update ea-php80 from v8.0.1 to v8.0.2
+
 * Thu Jan 07 2021 Tim Mullin <tim@cpanel.net> - 8.0.1-1
 - EA-9519: Update ea-php80 from v8.0.0 to v8.0.1
 
