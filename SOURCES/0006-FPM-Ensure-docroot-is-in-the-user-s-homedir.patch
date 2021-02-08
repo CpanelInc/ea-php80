@@ -8,7 +8,7 @@ Subject: [PATCH 06/12] FPM: Ensure docroot is in the user's homedir
  1 file changed, 12 insertions(+)
 
 diff --git a/sapi/fpm/fpm/fpm_main.c b/sapi/fpm/fpm/fpm_main.c
-index c849a359..9a39f5df 100644
+index c849a35..9a39f5d 100644
 --- a/sapi/fpm/fpm/fpm_main.c
 +++ b/sapi/fpm/fpm/fpm_main.c
 @@ -630,6 +630,9 @@ static void php_cgi_ini_activate_user_config(char *path, int path_len, const cha
