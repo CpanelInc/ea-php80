@@ -89,7 +89,6 @@ sed -e "s/@PHP_APIVER@/$apiver$isasuffix/" \
 # Some extensions have their own configuration file
 cp $SOURCE50 10-opcache.ini
 
-sed -e 's/php74/php80/g' -i 10-opcache.ini
 sed -e '/opcache.huge_code_pages/s/0/1/' -i 10-opcache.ini
 
 cp $SOURCE51 .
