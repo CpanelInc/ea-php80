@@ -63,5 +63,9 @@
         "libphp7.so",
         "ea-php80-php.gif"
     ],
+    "do_not_build_packages": [
+        "ea-php80-php-xmlrpc",
+        "ea-php80-php-interbase"
+    ],
     "fix_dh_usrlocal": 1
 }
