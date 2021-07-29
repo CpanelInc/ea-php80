@@ -159,7 +159,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.8
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1967,6 +1967,9 @@ fi
 %endif
 
 %changelog
+* Thu Jul 15 2021 Julian Brown <julian.brown@webpros.com> - 8.0.8-2
+- ZC-9089, ZC-9070: correction in opcache.ini
+
 * Thu Jul 01 2021 Travis Holloway <t.holloway@cpanel.net> - 8.0.8-1
 - EA-9930: Update ea-php80 from v8.0.7 to v8.0.8
 
