@@ -8,10 +8,10 @@ Subject: [PATCH 06/12] FPM: Ensure docroot is in the user's homedir
  1 file changed, 12 insertions(+)
 
 diff --git a/sapi/fpm/fpm/fpm_main.c b/sapi/fpm/fpm/fpm_main.c
-index c849a35..9a39f5d 100644
+index 3d7131ae..6c61d989 100644
 --- a/sapi/fpm/fpm/fpm_main.c
 +++ b/sapi/fpm/fpm/fpm_main.c
-@@ -630,6 +630,9 @@ static void php_cgi_ini_activate_user_config(char *path, int path_len, const cha
+@@ -631,6 +631,9 @@ static void php_cgi_ini_activate_user_config(char *path, int path_len, const cha
  
  	/* Check whether cache entry has expired and rescan if it is */
  	if (request_time > entry->expires) {
@@ -21,7 +21,7 @@ index c849a35..9a39f5d 100644
  		char * real_path;
  		int real_path_len;
  		char *s1, *s2;
-@@ -658,6 +661,15 @@ static void php_cgi_ini_activate_user_config(char *path, int path_len, const cha
+@@ -659,6 +662,15 @@ static void php_cgi_ini_activate_user_config(char *path, int path_len, const cha
  			s_len = path_len;
  		}
  
