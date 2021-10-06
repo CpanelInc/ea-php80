@@ -64,8 +64,10 @@
         "ea-php80-php.gif"
     ],
     "do_not_build_packages": [
+        "ea-php80-php",
         "ea-php80-php-xmlrpc",
-        "ea-php80-php-interbase"
+        "ea-php80-php-interbase",
+        "ea-php80-php-embedded"
     ],
     "fix_dh_usrlocal": 1
 }
