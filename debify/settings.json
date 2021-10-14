@@ -75,5 +75,6 @@
         "ea-php80-php-interbase",
         "ea-php80-php-embedded"
     ],
+    "control_file_source": "ea-php80-php",
     "fix_dh_usrlocal": 1
 }
