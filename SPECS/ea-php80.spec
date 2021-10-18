@@ -25,7 +25,6 @@
 %global embed_version 8.0
 
 # Ugly hack. Harcoded values to avoid relocation.
-%global _httpd_mmn         %(cat %{_root_includedir}/apache2/.mmn 2>/dev/null || echo missing-ea-apache24-devel)
 %global _httpd_confdir     %{_root_sysconfdir}/apache2/conf.d
 %global _httpd_moddir      %{_libdir}/apache2/modules
 %global _root_httpd_moddir %{_root_libdir}/apache2/modules
@@ -151,15 +150,12 @@ BuildRequires: ea-libzip-devel
 %endif
 
 Summary:  PHP scripting language for creating dynamic web sites
-%if %{with_httpd}
-Summary:  PHP DSO
-%endif
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.11
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 2
+%define release_prefix 3
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -258,21 +254,6 @@ BuildRequires: autoconf
 BuildRequires: autotools-latest-autoconf
 %endif
 
-%if %{with_httpd}
-BuildRequires: ea-apache24-devel
-# NOTE: Typically 2 additional BuildRequires: statements are needed to let
-# the RPM dependency solver know what mpm and cgi module to install.  However,
-# we're using an OBS-centric Project Config called, Prefer: which does this
-# for us.
-Requires: ea-apache24-mmn = %{_httpd_mmn}
-Provides: %{?scl_prefix}mod_php = %{version}-%{release}
-Provides: ea-mod_php = %{embed_version}
-Conflicts: ea-mod_php > %{embed_version}, ea-mod_php < %{embed_version}
-Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
-Requires(pre): ea-webserver
-Requires: ea-apache24-mpm = forked
-%endif
-
 # For backwards-compatibility, require php-cli for the time being:
 Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
 
@@ -283,21 +264,14 @@ Requires: autotools-latest-autoconf
 
 # Don't provides extensions, which are not shared library, as .so
 %{?filter_provides_in: %filter_provides_in %{_libdir}/php/modules/.*\.so$}
-%if %{with_httpd}
-%{?filter_provides_in: %filter_provides_in %{_httpd_moddir}/.*\.so$}
-%endif
 %{?filter_setup}
 
 %description
-%if %{with_httpd}
-Package that installs Apache`s mod_php DSO module for PHP 8.0
-%else
 This version of PHP does not include Apache's mod_php DSO module.
 
 PHP dropped the major version from its '.so' and symbols. Because
  this change is not backwards compatible, cPanel & WHM dropped
  support for DSO in PHP 8.0.
-%endif
 
 
 %package cli
@@ -1081,9 +1055,6 @@ mkdir \
 %if %{with_fpm}
     build-fpm \
 %endif
-%if %{with_httpd}
-    build-apache \
-%endif
     build-cgi
 
 # ----- Manage known as failed test -------
@@ -1431,17 +1402,6 @@ without_shared="--disable-gd \
       --disable-sysvmsg --disable-sysvshm --disable-sysvsem \
       --without-gmp --disable-calendar"
 
-%if %{with_httpd}
-# Build Apache module, and the CLI SAPI, /usr/bin/php
-pushd build-apache
-build --with-apxs2=%{_httpd_apxs} \
-      --libdir=%{_libdir}/php \
-      --without-mysqli \
-      --disable-pdo \
-      ${without_shared}
-popd
-%endif
-
 %if %{with_fpm}
 # Build php-fpm
 pushd build-fpm
@@ -1473,11 +1433,7 @@ popd
 # Increase stack size (required by bug54268.phpt)
 ulimit -s 32712
 
-%if %{with_httpd}
-cd build-apache
-%else
 cd build-cgi
-%endif
 
 # Run tests, using the CLI SAPI
 export NO_INTERACTION=1 REPORT_EXIT_STATUS=1
@@ -1530,21 +1486,6 @@ install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/php.ini
 
 # For third-party packaging:
 install -m 755 -d $RPM_BUILD_ROOT%{_datadir}/php
-
-%if %{with_httpd}
-# install the DSO
-install -m 755 -d $RPM_BUILD_ROOT%{_httpd_moddir}
-install -m 755 build-apache/libs/libphp.so $RPM_BUILD_ROOT%{_httpd_moddir}
-
-# Apache config fragment
-install -m 755 -d $RPM_BUILD_ROOT%{_httpd_contentdir}/icons
-install -m 644 ext/gd/tests/php.gif $RPM_BUILD_ROOT%{_httpd_contentdir}/icons/%{name}.gif
-%if %{?scl:1}0
-install -m 755 -d $RPM_BUILD_ROOT%{_root_httpd_moddir}
-ln -s %{_httpd_moddir}/libphp.so      $RPM_BUILD_ROOT%{_root_httpd_moddir}/libphp.so
-%endif
-
-%endif
 
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php.d
 install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/lib
@@ -1808,16 +1749,6 @@ fi
 %files
 %defattr(-,root,root)
 
-%if %{with_httpd}
-%{_httpd_moddir}/libphp.so
-%if 0%{?scl:1}
-#%dir %{_libdir}/apache2
-#%dir %{_libdir}/apache2/modules
-%{_root_httpd_moddir}/libphp.so
-%endif
-%{_httpd_contentdir}/icons/%{name}.gif
-%endif
-
 %files common -f files.common
 %defattr(-,root,root)
 %doc CODING_STANDARDS.md EXTENSIONS LICENSE NEWS README*
@@ -1967,6 +1898,9 @@ fi
 %endif
 
 %changelog
+* Wed Oct 06 2021 Julian Brown <julian.brown@cpanel.net> - 8.0.11-3
+- ZC-9370: Correct ea-php80 build issues
+
 * Fri Oct 01 2021 Cory McIntire <cory@cpanel.net> - 8.0.11-2
 - EA-10137: Disable upstream regression tests in favor of our own.
 
