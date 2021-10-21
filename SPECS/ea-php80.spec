@@ -153,9 +153,9 @@ Summary:  PHP scripting language for creating dynamic web sites
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
-Version:  8.0.11
+Version:  8.0.12
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 4
+%define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1900,6 +1900,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 21 2021 Cory McIntire <cory@cpanel.net> - 8.0.12-1
+- EA-10225: Update ea-php80 from v8.0.11 to v8.0.12
+
 * Tue Oct 19 2021 Tim Mullin <tim@cpanel.net> - 8.0.11-4
 - EA-10044: Patch PHP-FPM/OpCache for kill_all_lockers bug (74709)
 
