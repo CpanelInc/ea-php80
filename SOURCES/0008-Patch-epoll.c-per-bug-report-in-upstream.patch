@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Cory McIntire <cory@cpanel.net>
 Date: Fri, 2 Mar 2018 11:12:27 -0600
-Subject: [PATCH 08/12] Patch epoll.c per bug report in upstream.
+Subject: [PATCH 08/13] Patch epoll.c per bug report in upstream.
 
 Case HB-3061-70: Patch epoll.c per bug report in upstream.
 ---
