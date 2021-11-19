@@ -11,7 +11,7 @@ to crash for all the other sites.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/ext/opcache/ZendAccelerator.c b/ext/opcache/ZendAccelerator.c
-index 16a77fb..c61dabb 100644
+index fe19787..17c6186 100644
 --- a/ext/opcache/ZendAccelerator.c
 +++ b/ext/opcache/ZendAccelerator.c
 @@ -805,7 +805,7 @@ static inline void kill_all_lockers(struct flock *mem_usage_check)
