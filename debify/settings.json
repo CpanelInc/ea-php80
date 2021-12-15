@@ -19,9 +19,12 @@
         "scl-utils-build",
         "ea-php80-libc-client-devel",
         "ea-php80-libc-client",
+        "ea-php80-php",
         "brotli-devel",
         "libidn",
-        "libidn-devel"
+        "libidn-devel",
+        "pkgconfig(libsodium)",
+        "libsodium"
     ],
     "remove_from_provides": [
         "Provides:"
@@ -53,7 +56,9 @@
         "libbrotli-dev",
         "libbrotli1",
         "libidn11",
-        "libidn11-dev"
+        "libidn11-dev",
+        "libsodium-dev",
+        "libsodium23"
     ],
     "add_to_requires": {
         "ea-php80-php-imap": [ "libc-client2007e" ],
@@ -63,7 +68,8 @@
         "ea-php80-php-pdo": [ "libpq5" ],
         "ea-php80-php-pgsql": [ "libpq5" ],
         "ea-php80-php-pspell": [ "libaspell15" ],
-        "ea-php80-php-snmp": [ "libsnmp35" ]
+        "ea-php80-php-snmp": [ "libsnmp35" ],
+        "ea-php80-php-sodium": [ "ea-php80-php-common", "libsodium23" ]
     },
     "remove_from_install": [
         "libphp7.so",
