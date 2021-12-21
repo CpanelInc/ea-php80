@@ -63,7 +63,7 @@
     "add_to_requires": {
         "ea-php80-php-imap": [ "libc-client2007e" ],
         "ea-php80-php-dba": [ "libtokyocabinet9" ],
-        "ea-php80-php-enchant": [ "libenchant1c2a" ],
+        "ea-php80-php-enchant": [ "libenchant-2" ],
         "ea-php80-php-odbc": [ "libodbc1" ],
         "ea-php80-php-pdo": [ "libpq5" ],
         "ea-php80-php-pgsql": [ "libpq5" ],

@@ -284,7 +284,7 @@ PHP dropped the major version from its '.so' and symbols. Because
 %package sodium
 Summary:        Cryptographic Extension Based on Libsodium
 Group:          Development/Libraries/PHP
-Requires:       %{?scl_prefix}php = %{version}
+Requires:       %{?scl_prefix}php-common = %{version}
 Provides:       %{?scl_prefix}php-sodium = %{version}
 Obsoletes:      %{?scl_prefix}php-sodium < %{version}
 
@@ -1933,7 +1933,7 @@ fi
 %endif
 
 %changelog
-* Wed Dec 21 2021 Julian Brown <julian.brown@cpanel.net> - 8.0.14-2
+* Tue Dec 21 2021 Julian Brown <julian.brown@cpanel.net> - 8.0.14-2
 - ZC-7456: Add support for php-sodium
 
 * Fri Dec 17 2021 Cory McIntire <cory@cpanel.net> - 8.0.14-1
