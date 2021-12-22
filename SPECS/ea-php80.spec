@@ -1942,6 +1942,9 @@ fi
 * Thu Dec 23 2021 Julian Brown <julian.brown@cpanel.net> - 8.0.14-3
 - ZC-9611: Dependency issue with php-enchant on Ubuntu
 
+* Wed Dec 22 2021 Julian Brown <julian.brown@cpanel.net> - 8.0.14-3
+- ZC-9599: Fix Ubuntu 21 global regs problem
+
 * Tue Dec 21 2021 Julian Brown <julian.brown@cpanel.net> - 8.0.14-2
 - ZC-7456: Add support for php-sodium
 
