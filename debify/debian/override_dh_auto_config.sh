@@ -126,6 +126,7 @@ pushd build
 ln -s ../configure
 
 ./configure \
+    --disable-gcc-global-regs \
     --build=x86_64-linux-gnu \
     --host=x86_64-linux-gnu \
     --target=x86_64-pc-linux-gnu \
