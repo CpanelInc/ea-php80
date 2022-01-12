@@ -126,6 +126,7 @@ pushd build
 ln -s ../configure
 
 ./configure \
+    --disable-gcc-global-regs \
     --build=x86_64-linux-gnu \
     --host=x86_64-linux-gnu \
     --target=x86_64-pc-linux-gnu \
@@ -155,6 +156,7 @@ ln -s ../configure
     --with-bz2=shared \
     --with-freetype \ \
     --with-xpm \
+    --with-sodium=shared \
     --without-gdbm \
     --with-gettext=shared \
     --with-iconv=shared \
