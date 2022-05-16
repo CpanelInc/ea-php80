@@ -11,7 +11,7 @@ Third of 3 patches for signal management.
  create mode 100644 sapi/fpm/fpm/fpm_process_ctl.c.orig
 
 diff --git a/sapi/fpm/fpm/fpm_process_ctl.c b/sapi/fpm/fpm/fpm_process_ctl.c
-index a2f0f93..500bc6f 100644
+index 6f43965..19dd9ee 100644
 --- a/sapi/fpm/fpm/fpm_process_ctl.c
 +++ b/sapi/fpm/fpm/fpm_process_ctl.c
 @@ -57,7 +57,7 @@ static void fpm_pctl_action(struct fpm_event_s *ev, short which, void *arg) /* {
