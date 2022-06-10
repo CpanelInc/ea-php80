@@ -22,7 +22,7 @@ index 32b9a74..4f9e524 100644
    PHP_EVAL_LIBLINE($LIBXML_LIBS, $1)
  
 diff --git a/sapi/fpm/config.m4 b/sapi/fpm/config.m4
-index 7c2fdec..088e52d 100644
+index 09c3ae0..ee00d50 100644
 --- a/sapi/fpm/config.m4
 +++ b/sapi/fpm/config.m4
 @@ -538,8 +538,6 @@ if test "$PHP_FPM" != "no"; then
