@@ -159,7 +159,7 @@ Summary:  PHP scripting language for creating dynamic web sites
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
-Version:  8.0.21
+Version:  8.0.22
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
 %define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
@@ -1933,6 +1933,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 04 2022 Cory McIntire <cory@cpanel.net> - 8.0.22-1
+- EA-10864: Update ea-php80 from v8.0.21 to v8.0.22
+
 * Thu Jul 07 2022 Cory McIntire <cory@cpanel.net> - 8.0.21-1
 - EA-10820: Update ea-php80 from v8.0.20 to v8.0.21
 
