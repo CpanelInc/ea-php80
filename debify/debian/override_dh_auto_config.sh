@@ -97,8 +97,8 @@ sed -e 's:$_root_sysconfdir:$_sysconfdir:' -i 10-opcache.ini
 export EXTENSION_DIR=/opt/cpanel/ea-php80/root/usr/lib64/php/modules
 export PEAR_INSTALLDIR=${_datadir}/pear
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig:/usr/lib/x86_64-linux-gnu/pkgconfig
-export CFLAGS="-mshstk $CFLAGS"
-export LDFLAGS="-L/usr/lib/x86_64-linux-gnu -lxml2 -lsystemd $LDFLAGS"
+export CFLAGS="-mshstk -l:libcurl.so.4 $CFLAGS"
+export LDFLAGS="-L/usr/lib/x86_64-linux-gnu -lxml2 -lsystemd -l:libcurl.so.4 $LDFLAGS"
 
 KERBEROS_CFLAGS="-I/usr/include"
 KERBEROS_LIBS="-L/usr/lib/x86_64-linux-gnu"
