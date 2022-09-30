@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Daniel Muey <dan@cpanel.net>
 Date: Tue, 22 Sep 2020 12:27:52 -0500
-Subject: [PATCH 01/13] EA4 OBS ready
+Subject: [PATCH 01/14] EA4 OBS ready
 
 ---
  build/php.m4       | 2 --

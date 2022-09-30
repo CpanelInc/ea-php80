@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Tim Mullin <tim@cpanel.net>
 Date: Fri, 13 Aug 2021 16:46:41 +0000
-Subject: [PATCH 13/13] Prevent kill_all_lockers() from crashing PHP
+Subject: [PATCH 13/14] Prevent kill_all_lockers() from crashing PHP
 
 Log a warning instead of an error when failing to
 kill a process.  Throwing an error is causing PHP

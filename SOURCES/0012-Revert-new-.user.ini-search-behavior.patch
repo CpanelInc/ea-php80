@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Julian Brown <julian.brown@cpanel.net>
 Date: Mon, 20 Jul 2020 13:50:28 -0500
-Subject: [PATCH 12/13] Revert new .user.ini search behavior
+Subject: [PATCH 12/14] Revert new .user.ini search behavior
 
 PHP issue #79491 (https://bugs.php.net/bug.php?id=79491)
 introduced new behavior in searching for .user.ini
