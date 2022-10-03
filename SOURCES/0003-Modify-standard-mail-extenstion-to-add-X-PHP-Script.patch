@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Julian Brown <julian.brown@cpanel.net>
 Date: Mon, 20 Jul 2020 12:21:20 -0500
-Subject: [PATCH 03/13] Modify standard mail extenstion to add X-PHP-Script
+Subject: [PATCH 03/14] Modify standard mail extenstion to add X-PHP-Script
 
 ---
  ext/standard/mail.c | 50 +++++++++++++++++++++++++++++++++++++++++++++

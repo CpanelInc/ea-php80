@@ -1,14 +1,14 @@
-From c83a83a045687763045abf8564800ff7f7f9395c Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Julian Brown <julian.brown@cpanel.net>
 Date: Fri, 23 Sep 2022 12:02:31 -0500
-Subject: [PATCH] RSA_SSLV23_PADDING, has been removed from openssl
+Subject: [PATCH 14/14] RSA_SSLV23_PADDING, has been removed from openssl
 
 ---
  ext/openssl/openssl.c | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/ext/openssl/openssl.c b/ext/openssl/openssl.c
-index f791cfa8..b327b121 100644
+index 208776e..cd7fcdf 100644
 --- a/ext/openssl/openssl.c
 +++ b/ext/openssl/openssl.c
 @@ -1313,7 +1313,9 @@ PHP_MINIT_FUNCTION(openssl)
@@ -21,6 +21,3 @@ index f791cfa8..b327b121 100644
  	REGISTER_LONG_CONSTANT("OPENSSL_NO_PADDING", RSA_NO_PADDING, CONST_CS|CONST_PERSISTENT);
  	REGISTER_LONG_CONSTANT("OPENSSL_PKCS1_OAEP_PADDING", RSA_PKCS1_OAEP_PADDING, CONST_CS|CONST_PERSISTENT);
  
--- 
-2.37.0
-

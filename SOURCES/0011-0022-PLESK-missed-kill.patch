@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Julian Brown <julian.brown@cpanel.net>
 Date: Tue, 7 May 2019 12:18:27 -0500
-Subject: [PATCH 11/13] 0022-PLESK-missed-kill
+Subject: [PATCH 11/14] 0022-PLESK-missed-kill
 
 Third of 3 patches for signal management.
 ---
@@ -11,10 +11,10 @@ Third of 3 patches for signal management.
  create mode 100644 sapi/fpm/fpm/fpm_process_ctl.c.orig
 
 diff --git a/sapi/fpm/fpm/fpm_process_ctl.c b/sapi/fpm/fpm/fpm_process_ctl.c
-index 6f43965..19dd9ee 100644
+index 788b827..e2bf9ec 100644
 --- a/sapi/fpm/fpm/fpm_process_ctl.c
 +++ b/sapi/fpm/fpm/fpm_process_ctl.c
-@@ -57,7 +57,7 @@ static void fpm_pctl_action(struct fpm_event_s *ev, short which, void *arg) /* {
+@@ -58,7 +58,7 @@ static void fpm_pctl_action(struct fpm_event_s *ev, short which, void *arg) /* {
  
  static int fpm_pctl_timeout_set(int sec) /* {{{ */
  {
