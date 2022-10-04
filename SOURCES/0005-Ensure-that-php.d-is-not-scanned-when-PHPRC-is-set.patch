@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jacob Perkins <jacob.perkins@cpanel.net>
 Date: Mon, 13 Jun 2016 22:35:54 -0500
-Subject: [PATCH 05/13] Ensure that php.d is not scanned when PHPRC is set
+Subject: [PATCH 05/14] Ensure that php.d is not scanned when PHPRC is set
 
 Since EasyApache 4 is built with the configuration
 option 'with-config-file-scan-dir', this ensured that php.d was
