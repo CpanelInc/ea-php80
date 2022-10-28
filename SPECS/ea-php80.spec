@@ -1952,6 +1952,8 @@ fi
 %changelog
 * Fri Oct 28 2022 Cory McIntire <cory@cpanel.net> - 8.0.25-1
 - EA-11020: Update ea-php80 from v8.0.24 to v8.0.25
+- GD: OOB read due to insufficient input validation in imageloadfont(). (CVE-2022-31630)
+- Hash: buffer overflow in hash_update() on long parameter. (CVE-2022-37454)
 
 * Fri Sep 30 2022 Cory McIntire <cory@cpanel.net> - 8.0.24-1
 - EA-10961: Update ea-php80 from v8.0.23 to v8.0.24
