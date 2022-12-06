@@ -8,10 +8,10 @@ Subject: [PATCH 14/14] RSA_SSLV23_PADDING, has been removed from openssl
  1 file changed, 2 insertions(+)
 
 diff --git a/ext/openssl/openssl.c b/ext/openssl/openssl.c
-index 208776e..cd7fcdf 100644
+index 45a7e79..9827c75 100644
 --- a/ext/openssl/openssl.c
 +++ b/ext/openssl/openssl.c
-@@ -1313,7 +1313,9 @@ PHP_MINIT_FUNCTION(openssl)
+@@ -1325,7 +1325,9 @@ PHP_MINIT_FUNCTION(openssl)
  	REGISTER_LONG_CONSTANT("OPENSSL_CMS_NOSIGS", CMS_NOSIGS, CONST_CS|CONST_PERSISTENT);
  
  	REGISTER_LONG_CONSTANT("OPENSSL_PKCS1_PADDING", RSA_PKCS1_PADDING, CONST_CS|CONST_PERSISTENT);
