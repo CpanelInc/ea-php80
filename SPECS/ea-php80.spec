@@ -1,3 +1,5 @@
+%global debug_package %{nil}
+
 # Defining the package namespace
 # NOTE: pkg variable is a hack to fix invalid macro inside of macros.php
 %global ns_name ea
@@ -161,7 +163,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.28
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -836,6 +838,8 @@ Provides: %{?scl_prefix}php-xsl = %{version}-%{release}, %{?scl_prefix}php-xsl%{
 Provides: %{?scl_prefix}php-simplexml = %{version}-%{release}, %{?scl_prefix}php-simplexml%{?_isa} = %{version}-%{release}
 BuildRequires: libxslt-devel >= 1.0.18-1, ea-libxml2-devel
 Requires: ea-libxml2
+BuildRequires: libxslt >= 1.0.18-1
+Requires: libxslt >= 1.0.18-1
 
 %description xml
 The %{?scl_prefix}php-xml package contains dynamic shared objects which add support
@@ -1950,6 +1954,9 @@ fi
 %endif
 
 %changelog
+* Tue Apr 04 2023 Julian Brown <julian.brown@cpanel.net> - 8.0.28-2
+- ZC-10873: Simplify the libidn deps, for building on Ubunut 20 and 22
+
 * Tue Feb 14 2023 Cory McIntire <cory@cpanel.net> - 8.0.28-1
 - EA-11227: Update ea-php80 from v8.0.27 to v8.0.28
 - Fixed bug #81744 (Password_verify() always return true with some hash). (CVE-2023-0567)
