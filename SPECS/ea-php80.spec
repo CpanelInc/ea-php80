@@ -1,5 +1,3 @@
-%global debug_package %{nil}
-
 # Defining the package namespace
 # NOTE: pkg variable is a hack to fix invalid macro inside of macros.php
 %global ns_name ea
@@ -163,7 +161,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.28
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 2
+%define release_prefix 3
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1954,6 +1952,9 @@ fi
 %endif
 
 %changelog
+* Mon May 08 2023 Brian Mendoza <brian.mendoza@cpanel.net> - 8.0.28-3
+- ZC-10936: Clean up Makefile and remove debug-package-nil
+
 * Tue Apr 04 2023 Julian Brown <julian.brown@cpanel.net> - 8.0.28-2
 - ZC-10873: Simplify the libidn deps, for building on Ubunut 20 and 22
 
