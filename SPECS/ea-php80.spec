@@ -1,4 +1,4 @@
-5define debug_package %{nil}
+%define debug_package %{nil}
 %define _enable_debug_packages %{nil}
 
 # Defining the package namespace
