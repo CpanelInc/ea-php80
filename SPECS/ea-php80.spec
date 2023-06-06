@@ -164,7 +164,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.28
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 5
+%define release_prefix 6
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1954,6 +1954,9 @@ fi
 %endif
 
 %changelog
+* Tue May 30 2023 Travis Holloway <t.holloway@cpanel.net> - 8.0.28-6
+- EA-11447: Increase default php memory_limit for new installs from 32M to 128M
+
 * Thu May 18 2023 Julian Brown <julian.brown@cpanel.net> - 8.0.28-5
 - ZC-10931: Link statically with libc-client
 
