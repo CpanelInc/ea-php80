@@ -162,9 +162,9 @@ Summary:  PHP scripting language for creating dynamic web sites
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
-Version:  8.0.28
+Version:  8.0.29
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 6
+%define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1954,6 +1954,11 @@ fi
 %endif
 
 %changelog
+* Thu Jun 08 2023 Cory McIntire <cory@cpanel.net> - 8.0.29-1
+- EA-11475: Update ea-php80 from v8.0.28 to v8.0.29
+    - Fixed bug GHSA-76gg-c692-v2mw
+        (Missing error check and insufficient random bytes in HTTP Digest authentication for SOAP).
+
 * Tue May 30 2023 Travis Holloway <t.holloway@cpanel.net> - 8.0.28-6
 - EA-11447: Increase default php memory_limit for new installs from 32M to 128M
 
