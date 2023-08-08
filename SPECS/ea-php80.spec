@@ -162,7 +162,7 @@ Summary:  PHP scripting language for creating dynamic web sites
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
-Version:  8.0.29
+Version:  8.0.30
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
 %define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
@@ -1954,6 +1954,13 @@ fi
 %endif
 
 %changelog
+* Fri Aug 04 2023 Cory McIntire <cory@cpanel.net> - 8.0.30-1
+- EA-11590: Update ea-php80 from v8.0.29 to v8.0.30
+	- Libxml:
+		Fixed bug GHSA-3qrf-m4j2-pcrr (Security issue with external entity loading in XML without enabling it). (CVE-2023-3823)
+	- Phar:
+		Fixed bug GHSA-jqcx-ccgc-xwhv (Buffer mismanagement in phar_dir_read()). (CVE-2023-3824)
+
 * Thu Jun 08 2023 Cory McIntire <cory@cpanel.net> - 8.0.29-1
 - EA-11475: Update ea-php80 from v8.0.28 to v8.0.29
     - Fixed bug GHSA-76gg-c692-v2mw
