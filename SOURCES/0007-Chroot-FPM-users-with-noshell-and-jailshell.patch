@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Matt Dees <matt@cpanel.net>
 Date: Fri, 19 Aug 2016 10:10:41 -0500
-Subject: [PATCH 07/14] Chroot FPM users with noshell and jailshell
+Subject: [PATCH 07/15] Chroot FPM users with noshell and jailshell
 
 Case CPANEL-7016: This change will cause PHP-FPM to jail FPM users
 if their shells are set to noshell or jailshell no matter what.
@@ -11,7 +11,7 @@ if their shells are set to noshell or jailshell no matter what.
  2 files changed, 71 insertions(+), 1 deletion(-)
 
 diff --git a/sapi/fpm/fpm/fpm_conf.c b/sapi/fpm/fpm/fpm_conf.c
-index 8adc4ac..6d48a65 100644
+index 8adc4aca..6d48a65d 100644
 --- a/sapi/fpm/fpm/fpm_conf.c
 +++ b/sapi/fpm/fpm/fpm_conf.c
 @@ -1078,7 +1078,8 @@ static int fpm_conf_process_all_pools(void)
@@ -25,7 +25,7 @@ index 8adc4ac..6d48a65 100644
  					efree(buf);
  					return -1;
 diff --git a/sapi/fpm/fpm/fpm_unix.c b/sapi/fpm/fpm/fpm_unix.c
-index 649088f..8c7a4b0 100644
+index 649088f0..8c7a4b04 100644
 --- a/sapi/fpm/fpm/fpm_unix.c
 +++ b/sapi/fpm/fpm/fpm_unix.c
 @@ -10,6 +10,7 @@

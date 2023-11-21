@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Tim Mullin <tim@cpanel.net>
 Date: Fri, 13 Aug 2021 16:46:41 +0000
-Subject: [PATCH 13/14] Prevent kill_all_lockers() from crashing PHP
+Subject: [PATCH 13/15] Prevent kill_all_lockers() from crashing PHP
 
 Log a warning instead of an error when failing to
 kill a process.  Throwing an error is causing PHP
@@ -11,7 +11,7 @@ to crash for all the other sites.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/ext/opcache/ZendAccelerator.c b/ext/opcache/ZendAccelerator.c
-index 028a960..17a4bde 100644
+index 028a960b..17a4bde7 100644
 --- a/ext/opcache/ZendAccelerator.c
 +++ b/ext/opcache/ZendAccelerator.c
 @@ -805,7 +805,7 @@ static inline void kill_all_lockers(struct flock *mem_usage_check)
