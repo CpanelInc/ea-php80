@@ -161,13 +161,13 @@ gzip debian/tmp/opt/cpanel/ea-php80/root/usr/share/man/man8/php-fpm.8
 
 cp -f ./debian/tmp/etc/php-fpm.conf ./debian/tmp/opt/cpanel/ea-php80/root/etc/php-fpm.conf
 
-mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-dbg-${pkg_php_version}
-mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-dbg-${pkg_php_version}
-mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-fpm-${pkg_php_version}
-mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/licenses/ea-php80-php-fpm-${pkg_php_version}
-mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/licenses/ea-php80-php-bcmath-${pkg_php_version}
-mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-mbstring-${pkg_php_version}
+mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-dbg
+mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-dbg
+mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-fpm
+mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/licenses/ea-php80-php-fpm
+mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/licenses/ea-php80-php-bcmath
+mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-mbstring
 mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/etc/php-fpm.d
 mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/etc/php.d
 mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/var/run/php-fpm
@@ -177,28 +177,28 @@ mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/php
 mkdir -p ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/var/lib
 
 cp -R ${DEB_INSTALL_ROOT}/etc/php-fpm.d ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/etc/php-fpm.d
-cp -f ./sapi/phpdbg/CREDITS ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-dbg-${pkg_php_version}
-cp -f ./sapi/phpdbg/README.md ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-dbg-${pkg_php_version}
+cp -f ./sapi/phpdbg/CREDITS ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-dbg
+cp -f ./sapi/phpdbg/README.md ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-dbg
 cp -f ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/etc/php-fpm.d/php-fpm.d/www.conf.example ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/etc/php-fpm.d
 cp -R ${DEB_INSTALL_ROOT}/etc/sysconfig/php-fpm ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/etc/sysconfig
-cp -R ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/etc/php-fpm.conf.default ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-fpm-${pkg_php_version}
-cp -R ./fpm_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-fpm-${pkg_php_version}
+cp -R ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/etc/php-fpm.conf.default ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-fpm
+cp -R ./fpm_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-fpm
 cp ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/etc/php.d/* ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/etc/php.d
 cp ${DEB_INSTALL_ROOT}/etc/php.ini ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/etc
-cp ./CODING_STANDARDS.md ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./EXTENSIONS ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./NEWS ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./README.REDIST.BINS ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./README.md ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./TSRM_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./Zend/ZEND_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./libmagic_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./php.ini-development ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./php.ini-production ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common-${pkg_php_version}
-cp ./fpm_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/licenses/ea-php80-php-fpm-${pkg_php_version}
-cp ./libmbfl_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-mbstring-${pkg_php_version}
-cp ./libbcmath_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/licenses/ea-php80-php-bcmath-${pkg_php_version}
+cp ./CODING_STANDARDS.md ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./EXTENSIONS ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./NEWS ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./README.REDIST.BINS ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./README.md ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./TSRM_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./Zend/ZEND_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./libmagic_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./php.ini-development ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./php.ini-production ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-common
+cp ./fpm_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/licenses/ea-php80-php-fpm
+cp ./libmbfl_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/doc/ea-php80-php-mbstring
+cp ./libbcmath_LICENSE ${DEB_INSTALL_ROOT}/opt/cpanel/ea-php80/root/usr/share/licenses/ea-php80-php-bcmath
 
 echo "FILELIST"
 find . -type f -print
