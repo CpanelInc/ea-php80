@@ -164,7 +164,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.30
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 2
+%define release_prefix 3
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -210,6 +210,8 @@ Patch403: 0012-Revert-new-.user.ini-search-behavior.patch
 Patch404: 0013-Prevent-kill_all_lockers-from-crashing-PHP.patch
 
 Patch014: 0014-RSA_SSLV23_PADDING-has-been-removed-from-openssl.patch
+
+Patch501: 0015-Update-libxml-include-file-references.patch
 
 BuildRequires: re2c
 BuildRequires: ea-libxml2-devel
@@ -1044,6 +1046,8 @@ inside them.
 %if 0%{?rhel} >= 9
 %patch014 -p1 -b .rsa_sslv23_padding
 %endif
+
+%patch501 -p1 -b .libxml
 
 # 7.4 does not need this for tidy even thought the instructions say to do it, weird ...
 # sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
@@ -1954,6 +1958,9 @@ fi
 %endif
 
 %changelog
+* Tue Nov 30 2023 Tim Mullin <tim@cpanel.net> - 8.0.30-3
+- EA-11821: Patch to build with the latest ea-libxml2
+
 * Tue Nov 28 2023 Julian Brown <julian.brown@cpanel.net> - 8.0.30-2
 - ZC-11419: Correct Ubuntu Build issues
 
