@@ -1,14 +1,14 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Julian Brown <julian.brown@cpanel.net>
 Date: Fri, 23 Sep 2022 12:02:31 -0500
-Subject: [PATCH 14/14] RSA_SSLV23_PADDING, has been removed from openssl
+Subject: [PATCH 14/15] RSA_SSLV23_PADDING, has been removed from openssl
 
 ---
  ext/openssl/openssl.c | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/ext/openssl/openssl.c b/ext/openssl/openssl.c
-index 45a7e79..9827c75 100644
+index 45a7e794..9827c758 100644
 --- a/ext/openssl/openssl.c
 +++ b/ext/openssl/openssl.c
 @@ -1325,7 +1325,9 @@ PHP_MINIT_FUNCTION(openssl)
