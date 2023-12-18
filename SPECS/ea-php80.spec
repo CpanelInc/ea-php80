@@ -164,7 +164,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.30
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 3
+%define release_prefix 4
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1958,6 +1958,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 18 2023 Travis Holloway <t.holloway@cpanel.net> - 8.0.30-4
+- EA-10753: Have snmp module require 'snmp-mibs-downloader' for deb
+
 * Tue Nov 30 2023 Tim Mullin <tim@cpanel.net> - 8.0.30-3
 - EA-11821: Patch to build with the latest ea-libxml2
 
