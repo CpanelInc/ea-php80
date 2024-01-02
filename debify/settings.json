@@ -64,7 +64,7 @@
         "ea-php80-php-pdo": [ "libpq5" ],
         "ea-php80-php-pgsql": [ "libpq5" ],
         "ea-php80-php-pspell": [ "libaspell15" ],
-        "ea-php80-php-snmp": [ "libsnmp35" ],
+        "ea-php80-php-snmp": [ "libsnmp35", "snmp-mibs-downloader" ],
         "ea-php80-php-sodium": [ "ea-php80-php-common", "libsodium23" ]
     },
     "remove_from_install": [
