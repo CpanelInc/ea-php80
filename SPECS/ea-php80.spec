@@ -164,7 +164,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.30
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 4
+%define release_prefix 5
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -212,6 +212,8 @@ Patch404: 0013-Prevent-kill_all_lockers-from-crashing-PHP.patch
 Patch014: 0014-RSA_SSLV23_PADDING-has-been-removed-from-openssl.patch
 
 Patch501: 0015-Update-libxml-include-file-references.patch
+
+Patch015: 0015-libxml2-2.13-makes-changes-to-how-the-parsing-state-.patch
 
 BuildRequires: re2c
 BuildRequires: ea-libxml2-devel
@@ -1048,6 +1050,8 @@ inside them.
 %endif
 
 %patch501 -p1 -b .libxml
+
+%patch015 -p1 -b .libxml2
 
 # 7.4 does not need this for tidy even thought the instructions say to do it, weird ...
 # sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
@@ -1958,6 +1962,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 04 2024 Julian Brown <julian.brown@cpanel.net> - 8.0.30-5
+- ZC-12114: Apply fix for libxml2
+
 * Mon Dec 18 2023 Travis Holloway <t.holloway@cpanel.net> - 8.0.30-4
 - EA-10753: Have snmp module require 'snmp-mibs-downloader' for deb
 
