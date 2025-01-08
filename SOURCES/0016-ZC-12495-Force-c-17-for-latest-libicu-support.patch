@@ -1,0 +1,25 @@
+From 5125c5d9ba4dba811e075cf5142e5453689cff97 Mon Sep 17 00:00:00 2001
+From: Dan Muey <daniel.muey@webpros.com>
+Date: Wed, 8 Jan 2025 19:55:53 +0000
+Subject: [PATCH] ZC-12495: Force `c++17` for latest libicu support
+
+---
+ ext/intl/config.m4 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ext/intl/config.m4 b/ext/intl/config.m4
+index 36221a9d..344d4890 100644
+--- a/ext/intl/config.m4
++++ b/ext/intl/config.m4
+@@ -83,7 +83,7 @@ if test "$PHP_INTL" != "no"; then
+     breakiterator/codepointiterator_methods.cpp"
+ 
+   PHP_REQUIRE_CXX()
+-  PHP_CXX_COMPILE_STDCXX(11, mandatory, PHP_INTL_STDCXX)
++  PHP_CXX_COMPILE_STDCXX(17, mandatory, PHP_INTL_STDCXX)
+   PHP_INTL_CXX_FLAGS="$INTL_COMMON_FLAGS $PHP_INTL_STDCXX $ICU_CXXFLAGS"
+   case $host_alias in
+   *cygwin*) PHP_INTL_CXX_FLAGS="$PHP_INTL_CXX_FLAGS -D_POSIX_C_SOURCE=200809L"
+-- 
+2.43.2
+
