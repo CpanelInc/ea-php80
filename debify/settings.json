@@ -24,9 +24,6 @@
         "pkgconfig(libsodium)",
         "libsodium"
     ],
-    "remove_from_provides": [
-        "Provides:"
-    ],
     "remove_from_patches": [
        "0010-Add-AUTOCONF-AUTOHEADER-variables-for-C6.patch"
     ],
