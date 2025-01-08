@@ -212,6 +212,8 @@ Patch501: 0015-Update-libxml-include-file-references.patch
 
 Patch015: 0015-libxml2-2.13-makes-changes-to-how-the-parsing-state-.patch
 
+Patch016: 0016-ZC-12495-Force-c-17-for-latest-libicu-support.patch
+
 BuildRequires: re2c
 BuildRequires: ea-libxml2-devel
 BuildRequires: bzip2-devel, %{db_devel}
@@ -1049,6 +1051,7 @@ inside them.
 %patch501 -p1 -b .libxml
 
 %patch015 -p1 -b .libxml2
+%patch016 -p1 -b .cxx17libicu
 
 # 7.4 does not need this for tidy even thought the instructions say to do it, weird ...
 # sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
