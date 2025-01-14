@@ -11,10 +11,10 @@
         "_httpd_moddir": "/usr/lib64/apache2/modules"
     },
     "remove_from_requires": [
-        "devtoolset-7-gcc",
-        "devtoolset-7-gcc-c++",
-        "devtoolset-7-libatomic-devel",
-        "devtoolset-7-toolchain",
+        "devtoolset-8",
+        "devtoolset-8-gcc",
+        "devtoolset-8-gcc-c++",
+        "kernel-devel",
         "autotools-latest-autoconf",
         "scl-utils-build",
         "ea-php80-libc-client-devel",
@@ -23,9 +23,6 @@
         "brotli-devel",
         "pkgconfig(libsodium)",
         "libsodium"
-    ],
-    "remove_from_provides": [
-        "Provides:"
     ],
     "remove_from_patches": [
        "0010-Add-AUTOCONF-AUTOHEADER-variables-for-C6.patch"

@@ -71,11 +71,8 @@
 %global with_sodium 0
 %endif
 
-%if 0%{rhel} < 7
-BuildRequires: devtoolset-7-toolchain
-BuildRequires: devtoolset-7-libatomic-devel
-BuildRequires: devtoolset-7-gcc
-BuildRequires: devtoolset-7-gcc-c++
+%if 0%{rhel} == 7
+BuildRequires: devtoolset-8 devtoolset-8-gcc devtoolset-8-gcc-c++ kernel-devel
 %endif
 
 # PHP 7.0 switched to using libwebp with the bundled version of gd,
@@ -164,7 +161,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.30
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 7
+%define release_prefix 8
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -215,6 +212,8 @@ Patch501: 0015-Update-libxml-include-file-references.patch
 
 Patch015: 0015-libxml2-2.13-makes-changes-to-how-the-parsing-state-.patch
 
+Patch016: 0016-ZC-12495-Force-c-17-for-latest-libicu-support.patch
+
 BuildRequires: re2c
 BuildRequires: ea-libxml2-devel
 BuildRequires: bzip2-devel, %{db_devel}
@@ -254,7 +253,7 @@ BuildRequires: readline-devel
 %if %{with_pcre}
 BuildRequires: pcre2-devel >= 10.30
 %else
-Provides:      Provides: bundled(pcre2) = 10.32
+Provides:      bundled(pcre2) = 10.32
 %endif
 BuildRequires: bzip2, perl, libtool >= 1.4.3, gcc-c++
 BuildRequires: libtool-ltdl-devel
@@ -1052,6 +1051,7 @@ inside them.
 %patch501 -p1 -b .libxml
 
 %patch015 -p1 -b .libxml2
+%patch016 -p1 -b .cxx17libicu
 
 # 7.4 does not need this for tidy even thought the instructions say to do it, weird ...
 # sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
@@ -1177,8 +1177,8 @@ sed -e 's:%{_root_sysconfdir}:%{_sysconfdir}:' \
 
 
 %build
-%if 0%{?rhel} < 7
-. /opt/rh/devtoolset-7/enable
+%if 0%{?rhel} == 7
+. /opt/rh/devtoolset-8/enable
 %endif
 
 # aclocal workaround - to be improved
@@ -1962,6 +1962,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 07 2025 Dan Muey <daniel.muey@webpros.com> - 8.0.30-8
+- ZC-12495: Do gcc like newer PHPs so that the libicu update won’t break the build
+
 * Fri Oct 25 2024 Julian Brown <julian.brown@cpanel.net> - 8.0.30-7
 - ZC-12246: Correct conffiles for Ubuntu
 
