@@ -1295,6 +1295,11 @@ export LDFLAGS="$XLDFLAGS -Wl,-rpath,/opt/cpanel/ea-libzip/lib64 -Wl,-rpath-link
 export LDFLAGS="-Wl,-rpath=/opt/cpanel/ea-brotli/lib"
 %endif
 
+export LDFLAGS="$LDFLAGS \
+    -Wl,--enable-new-dtags \
+    -Wl,-rpath,/opt/cpanel/ea-libxml2/lib \
+    -Wl,-rpath,/opt/cpanel/ea-libxml2/lib64"
+
 ln -sf ../configure
 %configure \
     --cache-file=../config.cache \
