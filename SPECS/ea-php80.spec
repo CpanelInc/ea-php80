@@ -161,7 +161,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.30
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 8
+%define release_prefix 9
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -213,6 +213,7 @@ Patch501: 0015-Update-libxml-include-file-references.patch
 Patch015: 0015-libxml2-2.13-makes-changes-to-how-the-parsing-state-.patch
 
 Patch016: 0016-ZC-12495-Force-c-17-for-latest-libicu-support.patch
+Patch017: 0017-Fix-compatibility-with-libxml2-v2.15.0.patch
 
 BuildRequires: re2c
 BuildRequires: ea-libxml2-devel
@@ -1052,6 +1053,7 @@ inside them.
 
 %patch015 -p1 -b .libxml2
 %patch016 -p1 -b .cxx17libicu
+%patch017 -p1 -b .libxml2
 
 # 7.4 does not need this for tidy even thought the instructions say to do it, weird ...
 # sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
@@ -1962,6 +1964,9 @@ fi
 %endif
 
 %changelog
+* Mon Oct 06 2025 Chris Castillo <chris.castillo@webpros.com> - 8.0.30-9
+- EA4-136: Fix libxml2 v2.15.0 compatibility
+
 * Tue Jan 07 2025 Dan Muey <daniel.muey@webpros.com> - 8.0.30-8
 - ZC-12495: Do gcc like newer PHPs so that the libicu update won’t break the build
 
