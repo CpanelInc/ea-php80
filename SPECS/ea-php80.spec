@@ -155,13 +155,27 @@ BuildRequires: ea-libzip-devel
 %define ea_libcurl_ver 7.68.0-2
 %endif
 
+%if 0%{?rhel} >= 9
+%global use_system_libxml2 1
+%else
+%global use_system_libxml2 0
+%endif
+
+%if %{use_system_libxml2}
+%global libxml2_devel_pkg    libxml2-devel
+%global libxml2_runtime_pkg  libxml2
+%else
+%global libxml2_devel_pkg    ea-libxml2-devel
+%global libxml2_runtime_pkg  ea-libxml2
+%endif
+
 Summary:  PHP scripting language for creating dynamic web sites
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.30
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 9
+%define release_prefix 10
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -216,7 +230,7 @@ Patch016: 0016-ZC-12495-Force-c-17-for-latest-libicu-support.patch
 Patch017: 0017-Fix-compatibility-with-libxml2-v2.15.0.patch
 
 BuildRequires: re2c
-BuildRequires: ea-libxml2-devel
+BuildRequires: %{libxml2_devel_pkg}
 BuildRequires: bzip2-devel, %{db_devel}
 
 %if 0%{?rhel} >= 8
@@ -760,7 +774,7 @@ Group: Development/Languages
 License: PHP
 Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
-BuildRequires: ea-libxml2-devel
+BuildRequires: %{libxml2_devel_pkg}
 
 %description soap
 The %{?scl_prefix}php-soap package contains a dynamic shared object that will add
@@ -834,8 +848,8 @@ Provides: %{?scl_prefix}php-xmlreader = %{version}-%{release}, %{?scl_prefix}php
 Provides: %{?scl_prefix}php-xmlwriter = %{version}-%{release}, %{?scl_prefix}php-xmlwriter%{?_isa} = %{version}-%{release}
 Provides: %{?scl_prefix}php-xsl = %{version}-%{release}, %{?scl_prefix}php-xsl%{?_isa} = %{version}-%{release}
 Provides: %{?scl_prefix}php-simplexml = %{version}-%{release}, %{?scl_prefix}php-simplexml%{?_isa} = %{version}-%{release}
-BuildRequires: libxslt-devel >= 1.0.18-1, ea-libxml2-devel
-Requires: ea-libxml2
+BuildRequires: libxslt-devel >= 1.0.18-1, %{libxml2_devel_pkg}
+Requires: %{libxml2_runtime_pkg}
 BuildRequires: libxslt >= 1.0.18-1
 Requires: libxslt >= 1.0.18-1
 
@@ -1255,15 +1269,25 @@ cp ../Zend/zend_{language,ini}_{parser,scanner}.* Zend
 # zlib: used by image
 
 %if 0%{?rhel} > 7
-export PKG_CONFIG_PATH=/opt/cpanel/ea-php80/root/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-php80/root/usr/share/pkgconfig:/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-libxml2/%{_lib}/pkgconfig:/opt/cpanel/ea-libicu/lib/pkgconfig:/opt/cpanel/ea-oniguruma/%{_lib}/pkgconfig:/usr/lib64/pkgconfig:/opt/cpanel/libargon2/lib64/pkgconfig
+export PKG_CONFIG_PATH=/opt/cpanel/ea-php80/root/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-php80/root/usr/share/pkgconfig:/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-libicu/lib/pkgconfig:/opt/cpanel/ea-oniguruma/%{_lib}/pkgconfig:/usr/lib64/pkgconfig:/opt/cpanel/libargon2/lib64/pkgconfig
 %else
-export PKG_CONFIG_PATH=/opt/cpanel/ea-php80/root/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-php80/root/usr/share/pkgconfig:/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-openssl11/%{_lib}/pkgconfig:/opt/cpanel/ea-libxml2/%{_lib}/pkgconfig:/opt/cpanel/ea-libicu/lib/pkgconfig:/opt/cpanel/ea-oniguruma/%{_lib}/pkgconfig:/usr/lib64/pkgconfig:/opt/cpanel/libargon2/lib64/pkgconfig
+export PKG_CONFIG_PATH=/opt/cpanel/ea-php80/root/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-php80/root/usr/share/pkgconfig:/usr/%{_lib}/pkgconfig:/opt/cpanel/ea-openssl11/%{_lib}/pkgconfig:/opt/cpanel/ea-libicu/lib/pkgconfig:/opt/cpanel/ea-oniguruma/%{_lib}/pkgconfig:/usr/lib64/pkgconfig:/opt/cpanel/libargon2/lib64/pkgconfig
 %endif
 
+%if !%{use_system_libxml2}
+export PKG_CONFIG_PATH="${PKG_CONFIG_PATH:+$PKG_CONFIG_PATH:}/opt/cpanel/ea-libxml2/%{_lib}/pkgconfig"
+%endif
+
+%if %{use_system_libxml2}
+export LIBXML_CFLAGS="$(pkg-config --cflags libxml-2.0)"
+export LIBXML_LIBS="$(pkg-config --libs   libxml-2.0)"
+%else
 export LIBXML_CFLAGS=-I/opt/cpanel/ea-libxml2/include/libxml2
 export LIBXML_LIBS="-L/opt/cpanel/ea-libxml2/%{_lib} -lxml2"
 export XSL_CFLAGS=-I/opt/cpanel/ea-libxml2/include/libxml2
 export XSL_LIBS="-L/opt/cpanel/ea-libxml2/%{_lib} -lxml2"
+%endif
+
 %if 0%{?rhel} < 8
 export CURL_CFLAGS=-I/opt/cpanel/libcurl/include
 export CURL_LIBS="-L/opt/cpanel/libcurl/%{_lib} -lcurl"
@@ -1295,10 +1319,12 @@ export LDFLAGS="$XLDFLAGS -Wl,-rpath,/opt/cpanel/ea-libzip/lib64 -Wl,-rpath-link
 export LDFLAGS="-Wl,-rpath=/opt/cpanel/ea-brotli/lib"
 %endif
 
-export LDFLAGS="$LDFLAGS \
-    -Wl,--enable-new-dtags \
-    -Wl,-rpath,/opt/cpanel/ea-libxml2/lib \
-    -Wl,-rpath,/opt/cpanel/ea-libxml2/lib64"
+%if !%{use_system_libxml2}
+ export LDFLAGS="$LDFLAGS \
+     -Wl,--enable-new-dtags \
+     -Wl,-rpath,/opt/cpanel/ea-libxml2/lib \
+     -Wl,-rpath,/opt/cpanel/ea-libxml2/lib64"
+%endif
 
 ln -sf ../configure
 %configure \
@@ -1969,6 +1995,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 09 2026 Gary Stanley <gary.stanley@webpros.com> - 8.0.30-10
+- EA4-230: Use system libxml2 in PHP 8.0
+
 * Mon Oct 06 2025 Chris Castillo <chris.castillo@webpros.com> - 8.0.30-9
 - EA4-136: Fix libxml2 v2.15.0 compatibility
 
