@@ -175,7 +175,7 @@ Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
 Version:  8.0.30
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 11
+%define release_prefix 12
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -228,6 +228,7 @@ Patch015: 0015-libxml2-2.13-makes-changes-to-how-the-parsing-state-.patch
 
 Patch016: 0016-ZC-12495-Force-c-17-for-latest-libicu-support.patch
 Patch017: 0017-Fix-compatibility-with-libxml2-v2.15.0.patch
+Patch018: 0018-Avoid-state-corruption-via-bailout.patch
 
 BuildRequires: re2c
 BuildRequires: %{libxml2_devel_pkg}
@@ -1152,6 +1153,7 @@ inside them.
 %patch015 -p1 -b .libxml2
 %patch016 -p1 -b .cxx17libicu
 %patch017 -p1 -b .libxml2
+%patch018 -p1 -b .bailout
 
 # 7.4 does not need this for tidy even thought the instructions say to do it, weird ...
 # sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
@@ -2079,6 +2081,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 20 2026 Cory McIntire <cory.mcintire@webpros.com> - 8.0.30-12
+- EA-13612: Backport fix for CVE-2026-109618 and CVE-2026-109619
+
 * Wed Apr 08 2026 Brian Mendoza <brian.mendoza@webpros.com> - 8.0.30-11
 - EA4-173: Mark ea-php80 as EOL
 
