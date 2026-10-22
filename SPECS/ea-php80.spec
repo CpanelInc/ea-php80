@@ -173,9 +173,10 @@ Summary:  EOL PHP scripting language for creating dynamic web sites
 Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 # update to public release: also update other temprary hardcoded. look for "drop the RC labels"
-Version:  8.0.30
+%global upstream_version 8.0.30
+Version:  8.0.31
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 12
+%define release_prefix 1
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -184,7 +185,7 @@ License:  PHP and Zend and BSD
 Group:    Development/Languages
 URL: https://endoflife.date/php
 
-Source0: http://www.php.net/distributions/php-%{version}.tar.bz2
+Source0: http://www.php.net/distributions/php-%{upstream_version}.tar.bz2
 Source1: https://www.litespeedtech.com/packages/lsapi/php-litespeed-8.0.1.tgz
 Source2: php.ini
 Source3: macros.php
@@ -229,6 +230,7 @@ Patch015: 0015-libxml2-2.13-makes-changes-to-how-the-parsing-state-.patch
 Patch016: 0016-ZC-12495-Force-c-17-for-latest-libicu-support.patch
 Patch017: 0017-Fix-compatibility-with-libxml2-v2.15.0.patch
 Patch018: 0018-Avoid-state-corruption-via-bailout.patch
+Patch044: 0044-Report-PHP-version-8.0.31.patch
 
 BuildRequires: re2c
 BuildRequires: %{libxml2_devel_pkg}
@@ -1124,7 +1126,7 @@ inside them.
 %prep
 : Building %{name}-%{version}-%{release} with systemd=%{with_systemd} interbase=%{with_interbase} sqlite3=%{with_sqlite3} tidy=%{with_tidy} zip=%{with_zip}
 
-%setup -q -n php-%{version}
+%setup -q -n php-%{upstream_version}
 
 %patch42 -p1 -b .systemdpackage
 %patch43 -p1 -b .phpize
@@ -1154,6 +1156,7 @@ inside them.
 %patch016 -p1 -b .cxx17libicu
 %patch017 -p1 -b .libxml2
 %patch018 -p1 -b .bailout
+%patch044 -p1 -b .version
 
 # 7.4 does not need this for tidy even thought the instructions say to do it, weird ...
 # sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
@@ -2081,6 +2084,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 22 2026 Cory McIntire <cory.mcintire@webpros.com> - 8.0.31-1
+- EA-13619: Ghost bump to 8.0.31 for CVE-2026-109618 and CVE-2026-109619; no upstream 8.0.31 release exists
+
 * Tue Oct 20 2026 Cory McIntire <cory.mcintire@webpros.com> - 8.0.30-12
 - EA-13612: Backport fix for CVE-2026-109618 and CVE-2026-109619
 
