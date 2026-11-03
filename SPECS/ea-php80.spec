@@ -176,7 +176,7 @@ Name:     %{?scl_prefix}php
 %global upstream_version 8.0.30
 Version:  8.0.31
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -231,6 +231,7 @@ Patch016: 0016-ZC-12495-Force-c-17-for-latest-libicu-support.patch
 Patch017: 0017-Fix-compatibility-with-libxml2-v2.15.0.patch
 Patch018: 0018-Avoid-state-corruption-via-bailout.patch
 Patch044: 0044-Report-PHP-version-8.0.31.patch
+Patch045: 0045-Fix-CVE-2026-91765-and-CVE-2025-14181-in-ext-soap.patch
 
 BuildRequires: re2c
 BuildRequires: %{libxml2_devel_pkg}
@@ -1157,6 +1158,7 @@ inside them.
 %patch017 -p1 -b .libxml2
 %patch018 -p1 -b .bailout
 %patch044 -p1 -b .version
+%patch045 -p1 -b .soapcve
 
 # 7.4 does not need this for tidy even thought the instructions say to do it, weird ...
 # sed -i 's/buffio.h/tidybuffio.h/' ext/tidy/*.c
@@ -2084,6 +2086,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 02 2026 Cory McIntire <cory.mcintire@webpros.com> - 8.0.31-2
+- EA-13631: Backport fix for CVE-2026-91765 and CVE-2025-14181
+
 * Thu Oct 22 2026 Cory McIntire <cory.mcintire@webpros.com> - 8.0.31-1
 - EA-13619: Ghost bump to 8.0.31 for CVE-2026-109618 and CVE-2026-109619; no upstream 8.0.31 release exists
 
